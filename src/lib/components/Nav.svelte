@@ -32,9 +32,9 @@
   </p>
   <ul class="hidden md:flex flex-row items-center justify-end">
     {#if user}
-      <li>
+      <!-- <li>
         <a sveltekit:prefetch href="/">Home</a>
-      </li>
+      </li> -->
       <li>
         <a sveltekit:prefetch href="dashboard">Dashboard</a>
       </li>
