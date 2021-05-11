@@ -110,7 +110,7 @@
       user: $session.user,
       shiftDate: new Date(),
     };
-    console.log("Save: ", miles);
+    console.log("ShiftData: ", shiftData);
     // const db = await getFirestore();
     // const docRef = await addDoc(collection(db, `shifts`), shiftData);
     // currentWeekShifts.addCurrentWeekShift(shiftData);

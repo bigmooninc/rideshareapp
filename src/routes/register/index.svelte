@@ -67,16 +67,16 @@
       console.log(message);
     }
 
-    try {
-      const userData = {
-        userId: `${$session.user}`,
-      };
-      const db = await getFirestore();
-      const docRef = await addDoc(collection(db, "users"), { userData });
-      console.log(docRef.id);
-    } catch (err) {
-      console.log(err);
-    }
+    // try {
+    //   const userData = {
+    //     userId: `${$session.user}`,
+    //   };
+    //   const db = await getFirestore();
+    //   const docRef = await addDoc(collection(db, "users"), { userData });
+    //   console.log(docRef.id);
+    // } catch (err) {
+    //   console.log(err);
+    // }
   }
 </script>
 
