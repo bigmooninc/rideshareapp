@@ -174,7 +174,7 @@
 </script>
 
 <div class="page relative h-screen">
-  <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20">
+  <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
     <div class="relative flex flex-row justify-between items-center mb-5">
       <h3>
         This Week's Totals & Averages -
@@ -203,7 +203,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 px-3 md:px-0">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"

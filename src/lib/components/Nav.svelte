@@ -2,9 +2,14 @@
   import { goto } from "$app/navigation";
   import { session } from "$app/stores";
   import { getAuth, signOut } from "firebase/auth";
+  import { fly } from "svelte/transition";
+  import { quintIn, quintOut } from "svelte/easing";
 
   // Props
   export let user;
+
+  // Vars
+  let showMobileNav = false;
 
   // Functions
   async function handleLogout() {
@@ -51,7 +56,19 @@
       </li>
     {/if}
   </ul>
+  <button class="focus:outline-none" on:click={() => (showMobileNav = true)}>
+    <i class="fal fa-bars text-white md:hidden text-3xl" />
+  </button>
 </nav>
+
+{#if showMobileNav}
+  <div
+    in:fly={{ duration: 500, y: -1000, easing: quintOut }}
+    class="mobile_nav bg-black absolute top-0 bottom-0 left-0 w-full"
+  >
+    <p class="text-white">Mobile Nav</p>
+  </div>
+{/if}
 
 <style>
   nav {
@@ -61,10 +78,10 @@
   }
   p {
     color: #66fcf1;
-    @apply font-bold text-lg flex-1;
+    @apply font-bold text-xl flex-1;
   }
   ul {
-    @apply flex flex-row items-center justify-end;
+    @apply flex flex-row items-center justify-end hidden;
   }
   li {
     @apply font-normal text-sm uppercase mx-5;
@@ -74,5 +91,8 @@
   }
   a:hover {
     color: #66fcf1;
+  }
+  .mobile_nav {
+    z-index: 99999;
   }
 </style>
