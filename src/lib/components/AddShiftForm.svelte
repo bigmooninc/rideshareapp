@@ -5,19 +5,28 @@
 
   const dispatch = createEventDispatcher();
 
+  // Components
+  import AddMiles from "$lib/components/AddMiles.svelte";
+  import AddMpg from "$lib/components/AddMpg.svelte";
+  import AddShiftLength from "$lib/components/AddShiftLength.svelte";
+  import AddGasPrice from "$lib/components/AddGasPrice.svelte";
+  import AddGrossEarned from "$lib/components/AddGrossEarned.svelte";
+
   // Props
-  export let miles,
-    milesPerGallon,
-    gasPrice,
-    grossEarned,
-    shiftLength,
-    milesInput;
+  let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, milesInput;
+
+  // Vars
+  let showMiles = true;
+  let showMpg = false;
+  let showShiftLength = false;
+  let showGrossEarned = false;
+  let showGasPrice = false;
 
   // Functions
   onMount(() => {
-    setTimeout(() => {
-      milesInput.focus();
-    }, 200);
+    // setTimeout(() => {
+    //   milesInput.focus();
+    // }, 200);
   });
 
   function add() {
@@ -44,10 +53,48 @@
   function cancel() {
     dispatch("cancelAddShift");
   }
+
+  function handleAddMiles(event) {
+    event.preventDefault();
+
+    showMiles = false;
+    showMpg = true;
+  }
+
+  function handleAddMpg(event) {
+    event.preventDefault();
+
+    showMpg = false;
+    // showShiftLength = true;
+  }
 </script>
 
-<div in:fade={{ duration: 200 }} class="container">
-  <h3>Add Shift Info:</h3>
+<div in:fade={{ duration: 200 }} class="container overflow-hidden">
+  {#if showMiles}
+    <AddMiles
+      {milesInput}
+      on:addMiles={handleAddMiles}
+      on:addMpg={handleAddMpg}
+    />
+  {/if}
+
+  {#if showMpg}
+    <AddMpg />
+  {/if}
+
+  {#if showGasPrice}
+    <AddGasPrice />
+  {/if}
+
+  {#if showGrossEarned}
+    <AddGrossEarned />
+  {/if}
+
+  {#if showShiftLength}
+    <AddShiftLength />
+  {/if}
+
+  <!-- <h3>Add Shift Info:</h3>
   <form on:submit|preventDefault={add}>
     <div class="mb-3">
       <input
@@ -80,15 +127,17 @@
       <button type="submit">Add Shift</button>
       <a href="." on:click|preventDefault={cancel}>Cancel</a>
     </div>
-  </form>
+  </form> -->
 </div>
 
 <style>
   .container {
     width: 100%;
     max-width: 300px;
-    background: #fff;
-    @apply absolute right-0 top-0 p-8 z-20 rounded-lg shadow-lg;
+    height: 330px;
+    background-color: rgba(11, 12, 16, 0.9);
+    border: 2px solid #1f2833;
+    @apply absolute right-0 top-0 p-8 z-20 rounded-lg shadow-md flex flex-col justify-center items-center;
   }
   h3 {
     @apply font-bold text-2xl mb-3;

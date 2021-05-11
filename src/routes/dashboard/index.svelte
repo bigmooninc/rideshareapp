@@ -40,7 +40,7 @@
   let shiftGasCost = [];
   let shiftGrossEarned = [];
   let shiftNetPerHour = [];
-  let showAddShiftForm = false;
+  let showAddShiftForm = true;
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength;
   let currentUser = $session.user;
 
