@@ -44,7 +44,7 @@
 </script>
 
 <div
-  class="page w-full h-screen flex justify-center items-start md:items-center p-3 md:p-0 pt-20 md:pt-0"
+  class="page w-full h-screen flex justify-center items-start md:items-center p-3 md:p-0 pt-32 md:pt-0"
 >
   <Login {email} {password} on:login={handleLogin} />
 </div>
