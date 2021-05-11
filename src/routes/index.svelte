@@ -46,10 +46,10 @@
 
 <style>
   h1 {
-    @apply font-bold text-white text-5xl mb-2;
+    @apply font-bold text-white text-5xl mb-3;
   }
   p {
-    @apply font-light text-white text-lg mb-5 opacity-50;
+    @apply font-light text-white text-xl mb-5 opacity-50 leading-tight;
   }
   a {
     background: #66fcf1;
