@@ -23,12 +23,13 @@
   let showGrossEarned = false;
   let showGasPrice = false;
   let showSave = false;
+  let milesInput;
 
   // Functions
   onMount(() => {
-    // setTimeout(() => {
-    //   milesInput.focus();
-    // }, 200);
+    setTimeout(() => {
+      milesInput.focus();
+    }, 200);
   });
 
   function addShift() {

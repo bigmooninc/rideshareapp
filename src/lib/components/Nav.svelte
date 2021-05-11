@@ -17,6 +17,7 @@
     signOut(auth)
       .then(() => {
         console.log("Sign out successful");
+        $session.user = null;
       })
       .catch((error) => {
         console.log(error);
