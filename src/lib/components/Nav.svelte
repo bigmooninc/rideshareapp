@@ -25,9 +25,7 @@
 </script>
 
 <nav
-  class="fixed w-full p-5 flex flex-row justify-between items-center shadow-md {user
-    ? ''
-    : 'hidden'}"
+  class="fixed w-full p-5 flex flex-row justify-between items-center shadow-md"
 >
   <p>Ride Share Stats</p>
   <ul class="hidden md:flex flex-row items-center justify-end">
