@@ -65,25 +65,28 @@
     event.preventDefault();
 
     showMpg = false;
-    // showShiftLength = true;
+    showGasPrice = true;
+  }
+
+  function handleAddGasPrice(event) {
+    event.preventDefault();
+
+    showGasPrice = false;
+    showShiftLength = true;
   }
 </script>
 
 <div in:fade={{ duration: 200 }} class="container overflow-hidden">
   {#if showMiles}
-    <AddMiles
-      {milesInput}
-      on:addMiles={handleAddMiles}
-      on:addMpg={handleAddMpg}
-    />
+    <AddMiles on:addMiles={handleAddMiles} />
   {/if}
 
   {#if showMpg}
-    <AddMpg />
+    <AddMpg on:addMpg={handleAddMpg} />
   {/if}
 
   {#if showGasPrice}
-    <AddGasPrice />
+    <AddGasPrice on:addGasPrice={handleAddGasPrice} />
   {/if}
 
   {#if showGrossEarned}
@@ -93,41 +96,6 @@
   {#if showShiftLength}
     <AddShiftLength />
   {/if}
-
-  <!-- <h3>Add Shift Info:</h3>
-  <form on:submit|preventDefault={add}>
-    <div class="mb-3">
-      <input
-        type="text"
-        placeholder="Miles driven"
-        bind:this={milesInput}
-        bind:value={miles}
-      />
-    </div>
-    <div class="mb-3">
-      <input
-        type="text"
-        placeholder="Miles per gallon"
-        bind:value={milesPerGallon}
-      />
-    </div>
-    <div class="mb-3">
-      <input type="text" placeholder="Shift Length" bind:value={shiftLength} />
-    </div>
-    <div class="mb-3">
-      <input type="text" placeholder="Gas Price" bind:value={gasPrice} />
-    </div>
-    <div class="mb-3">
-      <input type="text" placeholder="Gross Earned" bind:value={grossEarned} />
-    </div>
-    <div class="mb-3">
-      <Datepicker />
-    </div>
-    <div class="flex flex-row justify-between items-center">
-      <button type="submit">Add Shift</button>
-      <a href="." on:click|preventDefault={cancel}>Cancel</a>
-    </div>
-  </form> -->
 </div>
 
 <style>

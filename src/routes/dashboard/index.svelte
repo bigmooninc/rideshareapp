@@ -40,7 +40,7 @@
   let shiftGasCost = [];
   let shiftGrossEarned = [];
   let shiftNetPerHour = [];
-  let showAddShiftForm = true;
+  let showAddShiftForm = false;
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength;
   let currentUser = $session.user;
 
@@ -203,7 +203,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-5 gap-3 mb-5">
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-3 px-3 md:px-0">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"
@@ -221,6 +221,11 @@
       />
       <StatBox
         title="Net per Hour"
+        value={averageNetPerHour > 0 ? averageNetPerHour : 0.0}
+        isDollarValue
+      />
+      <StatBox
+        title="Net per Mile"
         value={averageNetPerHour > 0 ? averageNetPerHour : 0.0}
         isDollarValue
       />

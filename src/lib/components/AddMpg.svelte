@@ -24,7 +24,7 @@
 </script>
 
 <div
-  in:fly={{ delay: 300, y: -500, duration: 1000, easing: quintOut }}
+  in:fly={{ delay: 300, y: -500, duration: 750, easing: quintOut }}
   class="relative w-full flex flex-col justify-center items-centerffghvbb"
 >
   <h3>How many miles per gallon?</h3>
