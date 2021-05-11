@@ -1,7 +1,7 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte";
-  import { fade, fly } from "svelte/transition";
-  import { quintOut, quintIn } from "svelte/easing";
+  import { fade, fly, slide } from "svelte/transition";
+  import { quintOut, quintIn, sineIn } from "svelte/easing";
 
   const dispatch = createEventDispatcher();
 
@@ -19,19 +19,23 @@
   });
 
   function add() {
-    dispatch("addMpg");
+    dispatch("addMpg", {
+      milesPerGallon,
+    });
   }
 </script>
 
 <div
-  in:fly={{ delay: 300, y: -500, duration: 750, easing: quintOut }}
-  class="relative w-full flex flex-col justify-center items-centerffghvbb"
+  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
+  out:fade={{ duration: 0 }}
 >
-  <h3>How many miles per gallon?</h3>
-  <input type="text" bind:value={milesPerGallon} bind:this={mpgInput} />
-  <button href="." on:click|preventDefault={add}>
-    <i class="far fa-long-arrow-right text-white text-3xl" />
-  </button>
+  <div class="w-full flex flex-col justify-center items-center">
+    <h3>How many miles per gallon?</h3>
+    <input type="text" bind:value={milesPerGallon} bind:this={mpgInput} />
+    <a href="." on:click|preventDefault={add} class="text-white">
+      <i class="far fa-long-arrow-right text-3xl" />
+    </a>
+  </div>
 </div>
 
 <style>

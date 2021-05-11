@@ -1,6 +1,7 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
+  import { quintIn, quintOut } from "svelte/easing";
 
   const dispatch = createEventDispatcher();
 
@@ -18,16 +19,20 @@
   });
 
   function add() {
-    dispatch("addMiles");
+    dispatch("addMiles", {
+      miles,
+    });
   }
 </script>
 
-<div class="relative w-full flex flex-col justify-center items-center">
-  <h3>How many miles did you drive?</h3>
-  <input type="text" bind:value={miles} bind:this={milesInput} />
-  <button on:click|preventDefault={add}>
-    <i class="far fa-long-arrow-right text-white text-3xl" />
-  </button>
+<div out:fade={{ duration: 0 }} class="relative">
+  <div class="w-full flex flex-col justify-center items-center">
+    <h3>How many miles did you drive?</h3>
+    <input type="text" bind:value={miles} bind:this={milesInput} />
+    <a href="." on:click|preventDefault={add} class="text-white">
+      <i class="far fa-long-arrow-right text-3xl" />
+    </a>
+  </div>
 </div>
 
 <style>

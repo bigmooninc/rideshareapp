@@ -110,12 +110,13 @@
       user: $session.user,
       shiftDate: new Date(),
     };
-    const db = await getFirestore();
-    const docRef = await addDoc(collection(db, `shifts`), shiftData);
-    currentWeekShifts.addCurrentWeekShift(shiftData);
-    showAddShiftForm = false;
-    clearState();
-    console.log(docRef);
+    console.log("Save: ", miles);
+    // const db = await getFirestore();
+    // const docRef = await addDoc(collection(db, `shifts`), shiftData);
+    // currentWeekShifts.addCurrentWeekShift(shiftData);
+    // showAddShiftForm = false;
+    // clearState();
+    // console.log(docRef);
   }
 
   //  REACTIVITY

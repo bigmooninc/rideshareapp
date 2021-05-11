@@ -1,14 +1,14 @@
 <script context="module">
-  // export async function load({ session }) {
-  //   let { user } = session;
-  //   if (!user) {
-  //     return {
-  //       status: 302,
-  //       redirect: "login",
-  //     };
-  //   }
-  //   return {};
-  // }
+  export async function load({ session }) {
+    let { user } = session;
+    if (user) {
+      return {
+        status: 302,
+        redirect: "dashboard",
+      };
+    }
+    return {};
+  }
 </script>
 
 <script>
@@ -30,7 +30,10 @@
   <div class="w-full max-w-5xl mx-auto px-5 md:px-0">
     <div class="flex flex-col justify-center items-start pt-48 pb-32">
       <h1>Rideshare Analytics</h1>
-      <p>Get accurate analytics to help inform and guide your rides.</p>
+      <p>
+        Get accurate analytics to help inform when your time driving is the most
+        profitable.
+      </p>
       <a
         href="register"
         class="border rounded-full font-medium text-base px-10 py-3"

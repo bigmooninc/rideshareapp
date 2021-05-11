@@ -9,7 +9,7 @@
 
 <div class="w-full max-w-sm mx-auto mb-20">
   <div class="form_container px-10 py-10 rounded-xl">
-    <h3>Sign In</h3>
+    <h3>Login</h3>
     <form
       on:submit|preventDefault={() => dispatch("login", { email, password })}
     >
@@ -23,7 +23,7 @@
           placeholder="Add a password"
         />
       </div>
-      <button type="submit" class="focus:outline-none">Sign In</button>
+      <button type="submit" class="focus:outline-none">Login</button>
     </form>
     <p>
       Don't have an account? <a href="register" class="form_link">Register</a>

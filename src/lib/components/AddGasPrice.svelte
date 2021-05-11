@@ -19,19 +19,24 @@
   });
 
   function add() {
-    dispatch("addGasPrice");
+    dispatch("addGasPrice", {
+      gasPrice,
+    });
   }
 </script>
 
 <div
-  in:fly={{ delay: 300, y: -500, duration: 750, easing: quintOut }}
-  class="relative w-full flex flex-col justify-center items-centerffghvbb"
+  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
+  out:fade={{ duration: 0 }}
+  class="relative"
 >
-  <h3>What price did you last pay for gas?</h3>
-  <input type="text" bind:value={gasPrice} bind:this={gasPriceInput} />
-  <button href="." on:click|preventDefault={add}>
-    <i class="far fa-long-arrow-right text-white text-3xl" />
-  </button>
+  <div class="w-full flex flex-col justify-center items-center">
+    <h3>What price did you last pay for gas?</h3>
+    <input type="text" bind:value={gasPrice} bind:this={gasPriceInput} />
+    <a href="." on:click|preventDefault={add}>
+      <i class="far fa-long-arrow-right text-white text-3xl" />
+    </a>
+  </div>
 </div>
 
 <style>

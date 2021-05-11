@@ -27,7 +27,9 @@
 <nav
   class="fixed w-full p-5 flex flex-row justify-between items-center shadow-md"
 >
-  <p>Ride Share Stats</p>
+  <p>
+    <a svelte:prefetch href="/">Ride Share Stats</a>
+  </p>
   <ul class="hidden md:flex flex-row items-center justify-end">
     {#if user}
       <li>
@@ -48,8 +50,7 @@
     {:else}
       <li>
         <a sveltekit:prefetch href="register">Register</a>
-      </li>
-      <li>
+        <span class="px-3">//</span>
         <a sveltekit:prefetch href="login">Login</a>
       </li>
     {/if}
@@ -89,5 +90,8 @@
   }
   .mobile_nav {
     z-index: 99999;
+  }
+  span {
+    color: #66fcf1;
   }
 </style>

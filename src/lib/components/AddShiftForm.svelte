@@ -11,9 +11,10 @@
   import AddShiftLength from "$lib/components/AddShiftLength.svelte";
   import AddGasPrice from "$lib/components/AddGasPrice.svelte";
   import AddGrossEarned from "$lib/components/AddGrossEarned.svelte";
+  import SaveShift from "$lib/components/SaveShift.svelte";
 
   // Props
-  let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, milesInput;
+  export let miles, milesPerGallon, gasPrice, grossEarned, shiftLength;
 
   // Vars
   let showMiles = true;
@@ -21,6 +22,7 @@
   let showShiftLength = false;
   let showGrossEarned = false;
   let showGasPrice = false;
+  let showSave = false;
 
   // Functions
   onMount(() => {
@@ -29,7 +31,7 @@
     // }, 200);
   });
 
-  function add() {
+  function addShift() {
     const gasUsed = miles / milesPerGallon;
     const gasCost = gasUsed * gasPrice;
     const netEarned = grossEarned - gasCost;
@@ -55,46 +57,65 @@
   }
 
   function handleAddMiles(event) {
-    event.preventDefault();
-
+    miles = event.detail.miles;
     showMiles = false;
     showMpg = true;
   }
 
   function handleAddMpg(event) {
-    event.preventDefault();
-
+    milesPerGallon = event.detail.milesPerGallon;
     showMpg = false;
     showGasPrice = true;
+    console.log("Miles", miles);
   }
 
   function handleAddGasPrice(event) {
-    event.preventDefault();
-
+    gasPrice = event.detail.gasPrice;
     showGasPrice = false;
+    showGrossEarned = true;
+  }
+  function handleGrossEarned(event) {
+    grossEarned = event.detail.grossEarned;
+    showGrossEarned = false;
     showShiftLength = true;
+  }
+  function handleShiftLength(event) {
+    shiftLength = event.detail.shiftLength;
+    showShiftLength = false;
+    showSave = true;
   }
 </script>
 
 <div in:fade={{ duration: 200 }} class="container overflow-hidden">
   {#if showMiles}
-    <AddMiles on:addMiles={handleAddMiles} />
+    <AddMiles {miles} on:addMiles={handleAddMiles} />
   {/if}
 
   {#if showMpg}
-    <AddMpg on:addMpg={handleAddMpg} />
+    <AddMpg {milesPerGallon} on:addMpg={handleAddMpg} />
   {/if}
 
   {#if showGasPrice}
-    <AddGasPrice on:addGasPrice={handleAddGasPrice} />
+    <AddGasPrice {gasPrice} on:addGasPrice={handleAddGasPrice} />
   {/if}
 
   {#if showGrossEarned}
-    <AddGrossEarned />
+    <AddGrossEarned {grossEarned} on:addGrossEarned={handleGrossEarned} />
   {/if}
 
   {#if showShiftLength}
-    <AddShiftLength />
+    <AddShiftLength {shiftLength} on:addShiftLength={handleShiftLength} />
+  {/if}
+
+  {#if showSave}
+    <SaveShift
+      {miles}
+      {milesPerGallon}
+      {grossEarned}
+      {gasPrice}
+      {shiftLength}
+      on:saveShift={addShift}
+    />
   {/if}
 </div>
 
