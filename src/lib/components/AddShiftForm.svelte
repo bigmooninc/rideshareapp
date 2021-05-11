@@ -86,7 +86,10 @@
   }
 </script>
 
-<div in:fade={{ duration: 200 }} class="container overflow-hidden">
+<div
+  in:fade={{ duration: 200 }}
+  class="container w-full max-w-full md:max-w-xs h-96 overflow-hidden"
+>
   {#if showMiles}
     <AddMiles {miles} on:addMiles={handleAddMiles} />
   {/if}
@@ -121,9 +124,9 @@
 
 <style>
   .container {
-    width: 100%;
-    max-width: 300px;
-    height: 330px;
+    /* width: 100%;
+    max-width: 300px; */
+    /* height: 330px; */
     background-color: rgba(11, 12, 16, 0.9);
     border: 2px solid #1f2833;
     @apply absolute right-0 top-0 p-8 z-20 rounded-lg shadow-md flex flex-col justify-center items-center;
