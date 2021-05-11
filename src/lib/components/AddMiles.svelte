@@ -1,7 +1,6 @@
 <script>
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
-  import { quintOut, quintIn } from "svelte/easing";
 
   const dispatch = createEventDispatcher();
 
