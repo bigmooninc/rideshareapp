@@ -203,7 +203,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"

@@ -30,7 +30,7 @@
     : 'hidden'}"
 >
   <p>Ride Share Stats</p>
-  <ul>
+  <ul class="hidden md:flex flex-row items-center justify-end">
     {#if user}
       <li>
         <a sveltekit:prefetch href="/">Home</a>
@@ -79,9 +79,6 @@
   p {
     color: #66fcf1;
     @apply font-bold text-xl flex-1;
-  }
-  ul {
-    @apply flex flex-row items-center justify-end hidden;
   }
   li {
     @apply font-normal text-sm uppercase mx-5;
