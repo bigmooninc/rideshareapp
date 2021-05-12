@@ -14,7 +14,6 @@
 <script>
   import { goto } from "$app/navigation";
   import { session } from "$app/stores";
-  import { collection, addDoc, getFirestore } from "firebase/firestore";
   import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
   // Components
@@ -43,10 +42,6 @@
 
     if (!validPassword) {
       confirmPassword = "";
-      // setTimeout(() => {
-      //   confirmPasswordInput.focus();
-      // }, 200);
-      // return;
     }
 
     password = event.detail.password;
@@ -66,17 +61,6 @@
       let message = err.message || err;
       console.log(message);
     }
-
-    // try {
-    //   const userData = {
-    //     userId: `${$session.user}`,
-    //   };
-    //   const db = await getFirestore();
-    //   const docRef = await addDoc(collection(db, "users"), { userData });
-    //   console.log(docRef.id);
-    // } catch (err) {
-    //   console.log(err);
-    // }
   }
 </script>
 

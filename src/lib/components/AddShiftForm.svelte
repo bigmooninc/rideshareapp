@@ -12,9 +12,15 @@
   import AddGasPrice from "$lib/components/AddGasPrice.svelte";
   import AddGrossEarned from "$lib/components/AddGrossEarned.svelte";
   import SaveShift from "$lib/components/SaveShift.svelte";
+  import AddTimeOfDay from "$lib/components/AddTimeOfDay.svelte";
 
   // Props
-  export let miles, milesPerGallon, gasPrice, grossEarned, shiftLength;
+  export let miles,
+    milesPerGallon,
+    gasPrice,
+    grossEarned,
+    shiftLength,
+    timeOfDay;
 
   // Vars
   let showMiles = true;
@@ -23,13 +29,13 @@
   let showGrossEarned = false;
   let showGasPrice = false;
   let showSave = false;
-  let milesInput;
+  let showTimeOfDay = false;
 
   // Functions
   onMount(() => {
-    setTimeout(() => {
-      milesInput.focus();
-    }, 200);
+    // setTimeout(() => {
+    //   milesInput.focus();
+    // }, 200);
   });
 
   function addShift() {
@@ -56,7 +62,6 @@
   function cancel() {
     dispatch("cancelAddShift");
   }
-
   function handleAddMiles(event) {
     miles = event.detail.miles;
     showMiles = false;
@@ -69,7 +74,6 @@
     showGasPrice = true;
     console.log("Miles", miles);
   }
-
   function handleAddGasPrice(event) {
     gasPrice = event.detail.gasPrice;
     showGasPrice = false;
@@ -83,6 +87,11 @@
   function handleShiftLength(event) {
     shiftLength = event.detail.shiftLength;
     showShiftLength = false;
+    showTimeOfDay = true;
+  }
+  function handleTimeOfDay(event) {
+    timeOfDay = event.detail.timeOfDay;
+    showTimeOfDay = false;
     showSave = true;
   }
 </script>
@@ -111,6 +120,10 @@
     <AddShiftLength {shiftLength} on:addShiftLength={handleShiftLength} />
   {/if}
 
+  {#if showTimeOfDay}
+    <AddTimeOfDay {timeOfDay} on:addTimeOfDay={handleTimeOfDay} />
+  {/if}
+
   {#if showSave}
     <SaveShift
       {miles}
@@ -118,6 +131,7 @@
       {grossEarned}
       {gasPrice}
       {shiftLength}
+      {timeOfDay}
       on:saveShift={addShift}
     />
   {/if}

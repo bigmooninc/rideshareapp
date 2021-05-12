@@ -4,7 +4,7 @@
     if (!user) {
       return {
         status: 302,
-        redirect: "/login",
+        redirect: "/",
       };
     }
     return {};
@@ -40,8 +40,9 @@
   let shiftGasCost = [];
   let shiftGrossEarned = [];
   let shiftNetPerHour = [];
+  let shiftNetPerMile = [];
   let showAddShiftForm = false;
-  let miles, milesPerGallon, gasPrice, grossEarned, shiftLength;
+  let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   let currentUser = $session.user;
 
   // *** FUNCTIONS ***
@@ -110,12 +111,12 @@
       user: $session.user,
       shiftDate: new Date(),
     };
-    console.log("ShiftData: ", shiftData);
-    // const db = await getFirestore();
-    // const docRef = await addDoc(collection(db, `shifts`), shiftData);
-    // currentWeekShifts.addCurrentWeekShift(shiftData);
-    // showAddShiftForm = false;
-    // clearState();
+    // console.log("ShiftData: ", shiftData);
+    const db = await getFirestore();
+    const docRef = await addDoc(collection(db, `shifts`), shiftData);
+    currentWeekShifts.addCurrentWeekShift(shiftData);
+    showAddShiftForm = false;
+    clearState();
     // console.log(docRef);
   }
 
@@ -172,6 +173,7 @@
   }
   $: net = shiftNetPerHour.reduce((a, b) => a + b, 0);
   $: averageNetPerHour = (net / shiftNetPerHour.length).toFixed(2);
+  $: averageNetPerMile = (net / totalMiles).toFixed(2);
 </script>
 
 <div class="page relative h-screen">
@@ -200,6 +202,7 @@
           {gasPrice}
           {grossEarned}
           {shiftLength}
+          {timeOfDay}
         />
       {/if}
     </div>
@@ -227,7 +230,7 @@
       />
       <StatBox
         title="Net per Mile"
-        value={averageNetPerHour > 0 ? averageNetPerHour : 0.0}
+        value={averageNetPerMile > 0 ? averageNetPerMile : 0.0}
         isDollarValue
       />
     </div>

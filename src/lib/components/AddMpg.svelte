@@ -46,7 +46,7 @@
     font-family: "Teko", sans-serif;
     @apply text-6xl w-full bg-transparent text-center focus:outline-none font-bold text-white pb-2 mb-10;
   }
-  button {
+  a {
     @apply focus:outline-none;
   }
 </style>
