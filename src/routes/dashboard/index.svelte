@@ -190,14 +190,17 @@
 <div class="page relative h-screen">
   <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
     <div class="relative flex flex-row justify-between items-center mb-5">
-      <h3>
-        This Week's Totals & Averages -
-        {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
-        - {format(
-          new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
-          "MMM d"
-        )}
-      </h3>
+      <div class="flex-1 flex flex-row items-center">
+        <h3 class="hidden md:visible">This Week's Totals & Averages -</h3>
+        <h3>
+          {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
+          - {format(
+            new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
+            "MMM d"
+          )}
+        </h3>
+      </div>
+
       {#if !showAddShiftForm}
         <button
           in:fade={{ delay: 100, duration: 200 }}
@@ -248,38 +251,41 @@
 
     <h3>This Week's Shifts</h3>
 
-    <div class="item_header flex flex-row items-center px-5 py-2 rounded">
-      <div class="w-20">
-        <p class="text-white">
-          <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
-          <!-- {shift.shiftDate} -->
-          <!-- {formatDate(parseInt(shift.shiftDate))} -->
-          Date
-        </p>
+    <div class="overflow-y-scroll">
+      <div
+        class="item_header flex flex-row items-center px-5 py-2 rounded overflow-x-scroll"
+      >
+        <div class="w-16 md:w-20">
+          <p class="text-white">
+            <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
+            <!-- {shift.shiftDate} -->
+            <!-- {formatDate(parseInt(shift.shiftDate))} -->
+            Date
+          </p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">Miles</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">MPG</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">Gas Cost</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">Earnings</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">Net/Hour</p>
+        </div>
+        <div class="flex-1">
+          <p class="text-white text-center">Net/Mile</p>
+        </div>
       </div>
-      <div class="flex-1">
-        <p class="text-white text-center">Miles</p>
-      </div>
-      <div class="flex-1">
-        <p class="text-white text-center">MPG</p>
-      </div>
-      <div class="flex-1">
-        <p class="text-white text-center">Gas Cost</p>
-      </div>
-      <div class="flex-1">
-        <p class="text-white text-center">Earnings</p>
-      </div>
-      <div class="flex-1">
-        <p class="text-white text-center">Net/Hour</p>
-      </div>
-      <div class="flex-1">
-        <p class="text-white text-center">Net/Mile</p>
-      </div>
+      {#each $currentWeekShifts as shift, i}
+        <ShiftDetail {shift} />
+      {/each}
     </div>
-
-    {#each $currentWeekShifts as shift, i}
-      <ShiftDetail {shift} />
-    {/each}
   </div>
 </div>
 
@@ -302,6 +308,7 @@
     width: 100%;
   }
   .item_header {
+    width: 750px;
     /* background-color: #1f2833; */
     /* border-color: #1f2833; */
   }

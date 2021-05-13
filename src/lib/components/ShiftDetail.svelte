@@ -13,7 +13,7 @@
 </script>
 
 <div class="item flex flex-row items-center px-5 py-3 rounded mb-2">
-  <div class="w-20">
+  <div class="w-16 md:w-20">
     <p class="text-white text-left">
       <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
       <!-- {shift.shiftDate} -->
@@ -55,6 +55,7 @@
 
 <style>
   .item {
+    width: 750px;
     background: #1f2833;
   }
   p {
