@@ -55,8 +55,14 @@
 
 <style>
   .item {
-    width: 750px;
+    width: 100%;
     background: #1f2833;
+  }
+  @media screen and (max-width: 767px) {
+    .item {
+      width: 750px;
+      background: #1f2833;
+    }
   }
   p {
     font-family: "Teko", sans-serif;
