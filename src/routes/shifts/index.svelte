@@ -14,7 +14,7 @@
 <script>
   import { onMount } from "svelte";
   import { session } from "$app/stores";
-  import { format, startOfWeek, endOfWeek } from "date-fns";
+  import { format } from "date-fns";
   import { fade } from "svelte/transition";
   import {
     collection,
@@ -27,181 +27,55 @@
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
 
-  // *** DATA STORES ***
-  import currentWeekShifts from "$lib/stores/current-shifts";
+  // Data Stores
+  import shifts from "$lib/stores/shifts";
 
-  // *** COMPONENTS ***
+  // Components
   import StatBox from "$lib/components/StatBox.svelte";
-  import AddShiftForm from "$lib/components/AddShiftForm.svelte";
   import ShiftDetail from "$lib/components/ShiftDetail.svelte";
 
-  // *** VARS ***
+  // Vars
   let shiftArray = [];
-  let shiftMiles = [];
-  let shiftMpgs = [];
-  let shiftGasCost = [];
-  let shiftGrossEarned = [];
-  let shiftNetPerHour = [];
-  let shiftNetPerMile = [];
+  // let shiftMiles = [];
+  // let shiftMpgs = [];
+  // let shiftGasCost = [];
+  // let shiftGrossEarned = [];
+  // let shiftNetPerHour = [];
+  // let shiftNetPerMile = [];
   let showAddShiftForm = false;
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
-  let currentUser = $session.user;
+  // let currentUser = $session.user;
 
-  // *** FUNCTIONS ***
+  // Functions
   onMount(async () => {
-    const currentWeekStart = format(
-      startOfWeek(new Date(), { weekStartsOn: 1 }),
-      "T"
-    );
-    const currentWeekEnd = format(
-      endOfWeek(new Date(), { weekStartsOn: 1 }),
-      "T"
-    );
-
-    console.log("Week: ", currentWeekStart, currentWeekEnd);
-    console.log("User: ", $session.user);
-
     const db = await getFirestore();
     const q = await query(
       collection(db, "shifts"),
-      where(
-        "user",
-        "==",
-        $session.user,
-        "&&",
-        "`shiftDate`",
-        ">=",
-        `${currentWeekStart}`,
-        "&&",
-        "shiftDate",
-        "<=",
-        `${currentWeekEnd}`
-      )
+      where("user", "==", $session.user)
     );
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
-      console.log("Doc 1: ", doc.data());
       const newShift = doc.data();
       shiftArray = [...shiftArray, newShift];
       shiftArray = shiftArray;
     });
-    currentWeekShifts.setCurrentWeekShifts(shiftArray);
+    shifts.setShifts(shiftArray);
   });
-
-  function clearState() {
-    miles = "";
-    milesPerGallon = "";
-    gasPrice = "";
-    grossEarned = "";
-    shiftLength = "";
-  }
-
-  async function handleAddShift(event) {
-    event.preventDefault();
-    const shiftData = {
-      gasUsed: event.detail.gasUsed,
-      gasCost: event.detail.gasCost,
-      netEarned: event.detail.netEarned,
-      netPerHour: event.detail.netPerHour,
-      miles: event.detail.miles,
-      milesPerGallon: event.detail.milesPerGallon,
-      gasPrice: event.detail.gasPrice,
-      grossEarned: event.detail.grossEarned,
-      shiftLength: event.detail.shiftLength,
-      netPerMile: event.detail.netPerMile,
-      timeOfDay: event.detail.timeOfDay,
-      user: $session.user,
-      shiftDate: format(new Date(), "T"),
-    };
-    console.log("ShiftData: ", shiftData);
-    const db = await getFirestore();
-    const docRef = await addDoc(collection(db, `shifts`), shiftData);
-    currentWeekShifts.addCurrentWeekShift(shiftData);
-    showAddShiftForm = false;
-    clearState();
-    // console.log(docRef);
-  }
-
-  //  REACTIVITY
-
-  // Calculating total miles
-  $: {
-    shiftMiles = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftMiles = [...shiftMiles, parseFloat(s.miles)];
-      shiftMiles = shiftMiles;
-    });
-  }
-  $: totalMiles = shiftMiles.reduce((a, b) => a + b, 0);
-
-  // Calculating average MPG
-  $: {
-    shiftMpgs = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftMpgs = [...shiftMpgs, parseFloat(s.milesPerGallon)];
-      shiftMpgs = shiftMpgs;
-    });
-  }
-  $: mpgs = shiftMpgs.reduce((a, b) => a + b, 0);
-  $: averageMilesPerGallon = (mpgs / shiftMpgs.length).toFixed(1);
-
-  // Calculating gas cost
-  $: {
-    shiftGasCost = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftGasCost = [...shiftGasCost, s.gasCost];
-      shiftGasCost = shiftGasCost;
-    });
-  }
-  $: totalGasCost = shiftGasCost.reduce((a, b) => a + b, 0).toFixed(2);
-
-  // Calculating gross earned
-  $: {
-    shiftGrossEarned = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftGrossEarned = [...shiftGrossEarned, parseFloat(s.grossEarned)];
-      shiftGrossEarned = shiftGrossEarned;
-    });
-  }
-  $: totalGrossEarned = shiftGrossEarned.reduce((a, b) => a + b, 0).toFixed(2);
-
-  // Calculating net earned per hour
-  $: {
-    shiftNetPerHour = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftNetPerHour = [...shiftNetPerHour, parseFloat(s.netPerHour)];
-      shiftNetPerHour = shiftNetPerHour;
-    });
-  }
-
-  $: net = shiftNetPerHour.reduce((a, b) => a + b, 0);
-  $: averageNetPerHour = (net / shiftNetPerHour.length).toFixed(2);
-
-  // Calculating Net Per Mile
-  $: {
-    shiftNetPerMile = [];
-    $currentWeekShifts.forEach((s) => {
-      shiftNetPerMile = [...shiftNetPerMile, parseFloat(s.netPerMile)];
-      shiftNetPerMile = shiftNetPerMile;
-    });
-  }
-  $: netPer = shiftNetPerMile.reduce((a, b) => a + b, 0);
-  $: averageNetPerMile = (netPer / shiftNetPerMile.length).toFixed(2);
 </script>
 
 <div class="page relative h-screen">
   <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
     <div class="relative flex flex-row justify-between items-center mb-5">
       <div class="flex-1 flex flex-row items-center">
-        <h3 class="hidden md:visible">This Week's Totals & Averages -</h3>
-        <h3>
+        <h3>Shift Totals & Averages</h3>
+        <!-- <h3>
           {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
           - {format(
             new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
             "MMM d"
           )}
-        </h3>
+        </h3> -->
       </div>
 
       {#if !showAddShiftForm}
@@ -210,7 +84,7 @@
           on:click={() => (showAddShiftForm = true)}>Add Shift</button
         >
       {/if}
-      {#if showAddShiftForm}
+      <!-- {#if showAddShiftForm}
         <AddShiftForm
           on:cancelAddShift={() => (showAddShiftForm = false)}
           on:addShift={handleAddShift}
@@ -221,11 +95,17 @@
           {shiftLength}
           {timeOfDay}
         />
-      {/if}
+      {/if} -->
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-10">
-      <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
+      <StatBox title="Miles" value={56.3} />
+      <StatBox title="MPG" value={32.4} />
+      <StatBox title="Gas Cost" value={2.55} isDollarValue />
+      <StatBox title="Gross Earned" value={56.43} isDollarValue />
+      <StatBox title="Net per Hour" value={20.23} isDollarValue />
+      <StatBox title="Net per Mile" value={0.54} isDollarValue />
+      <!-- <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"
         value={averageMilesPerGallon > 0 ? averageMilesPerGallon : 0}
@@ -249,10 +129,10 @@
         title="Net per Mile"
         value={averageNetPerMile > 0 ? averageNetPerMile : 0.0}
         isDollarValue
-      />
+      /> -->
     </div>
 
-    <h3>This Week's Shifts</h3>
+    <h3>Recent Shifts</h3>
 
     <div class="overflow-y-scroll">
       <div
@@ -285,7 +165,7 @@
           <p class="text-white text-center">Net/Mile</p>
         </div>
       </div>
-      {#each $currentWeekShifts as shift, index (shift)}
+      {#each $shifts as shift, index (shift)}
         <div animate:flip={{ delay: 250, duration: 250, easing: quintOut }}>
           <ShiftDetail {shift} />
         </div>

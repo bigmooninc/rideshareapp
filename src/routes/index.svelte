@@ -34,11 +34,14 @@
         Get accurate analytics to help inform when your time driving is the most
         profitable.
       </p>
-      <a
-        href="register"
-        class="border rounded-full font-medium text-base px-10 py-3"
-        >Get Started</a
-      >
+      <div class="flex flex-row items-center">
+        <a
+          href="register"
+          class="register_link border rounded-full font-bold text-base px-10 py-3"
+          >Get Started</a
+        >
+        <a href="login" class="login_link text-white bg-none px-8">Sign In</a>
+      </div>
     </div>
   </div>
 
@@ -56,10 +59,14 @@
     font-family: "Montserrat", sans-serif;
     @apply font-light text-white text-xl mb-5 opacity-50 leading-tight;
   }
-  a {
+  .register_link {
     font-family: "Montserrat", sans-serif;
     background: #66fcf1;
     border-color: #66fcf1;
     color: #1f2833;
+  }
+  .login_link {
+    font-family: "Montserrat", sans-serif;
+    @apply text-white;
   }
 </style>

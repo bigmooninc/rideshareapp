@@ -29,20 +29,20 @@
   class="fixed w-full px-3 py-5 flex flex-row justify-between items-center shadow-md"
 >
   <p>
-    <a svelte:prefetch href="/">Ride Share Stats</a>
+    <a svelte:prefetch href="/">Rideshare Analytics</a>
   </p>
   <ul class="hidden md:flex flex-row items-center justify-end">
     {#if user}
       <!-- <li>
         <a sveltekit:prefetch href="/">Home</a>
       </li> -->
-      <!-- <li>
+      <li>
         <a sveltekit:prefetch href="dashboard">Dashboard</a>
-      </li> -->
-      <!-- <li>
-        <a sveltekit:prefetch href="shifts">Shifts</a>
       </li>
       <li>
+        <a sveltekit:prefetch href="shifts">Shifts</a>
+      </li>
+      <!-- <li>
         <a sveltekit:prefetch href="settings">Settings</a>
       </li> -->
       <li>

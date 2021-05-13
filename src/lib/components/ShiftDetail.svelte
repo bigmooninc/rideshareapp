@@ -1,5 +1,7 @@
 <script>
   import { format, toDate } from "date-fns";
+  import { quintOut } from "svelte/easing";
+  import { flip } from "svelte/animate";
 
   // PROPS
   export let shift;
