@@ -36,9 +36,9 @@
       <!-- <li>
         <a sveltekit:prefetch href="/">Home</a>
       </li> -->
-      <li>
+      <!-- <li>
         <a sveltekit:prefetch href="dashboard">Dashboard</a>
-      </li>
+      </li> -->
       <!-- <li>
         <a sveltekit:prefetch href="shifts">Shifts</a>
       </li>
@@ -77,10 +77,12 @@
     z-index: 999;
   }
   p {
+    font-family: "Montserrat", sans-serif;
     color: #66fcf1;
     @apply font-bold text-xl flex-1;
   }
   li {
+    font-family: "Montserrat", sans-serif;
     @apply font-normal text-sm uppercase mx-5;
   }
   a {

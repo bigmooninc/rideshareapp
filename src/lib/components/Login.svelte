@@ -9,7 +9,7 @@
 
 <div class="w-full max-w-sm mx-auto mb-20">
   <div class="form_container px-10 py-10 rounded-xl">
-    <h3>Login</h3>
+    <h3>Log In</h3>
     <form
       on:submit|preventDefault={() => dispatch("login", { email, password })}
     >
@@ -33,9 +33,11 @@
 
 <style>
   h3 {
+    font-family: "Montserrat", sans-serif;
     @apply text-center font-light uppercase mb-6 text-3xl text-white;
   }
   input {
+    font-family: "Montserrat", sans-serif;
     color: white;
     border-color: #c5c6c7;
     @apply border rounded-full px-5 py-3 font-light w-full text-base bg-transparent;
@@ -44,12 +46,14 @@
     outline: none;
   }
   button {
+    font-family: "Montserrat", sans-serif;
     border: 1px solid #66fcf1;
     background-color: #66fcf1;
     color: #1f2833;
     @apply font-bold rounded-full px-8 py-3 w-full;
   }
   p {
+    font-family: "Montserrat", sans-serif;
     @apply font-light text-sm text-white text-center mt-4;
   }
   .form_container {

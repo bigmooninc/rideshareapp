@@ -24,6 +24,6 @@
   }
   p {
     font-family: "Teko", sans-serif;
-    @apply font-bold text-white text-5xl text-center leading-none;
+    @apply font-bold text-white text-4xl text-center leading-none;
   }
 </style>

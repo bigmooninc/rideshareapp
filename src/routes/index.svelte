@@ -49,12 +49,15 @@
 
 <style>
   h1 {
+    font-family: "Montserrat", sans-serif;
     @apply font-bold text-white text-5xl mb-3;
   }
   p {
+    font-family: "Montserrat", sans-serif;
     @apply font-light text-white text-xl mb-5 opacity-50 leading-tight;
   }
   a {
+    font-family: "Montserrat", sans-serif;
     background: #66fcf1;
     border-color: #66fcf1;
     color: #1f2833;

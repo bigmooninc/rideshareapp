@@ -38,6 +38,12 @@
 </div>
 
 <style>
+  h3,
+  input,
+  button,
+  p {
+    font-family: "Montserrat", sans-serif;
+  }
   h3 {
     @apply text-center font-light uppercase mb-6 text-3xl text-white;
   }

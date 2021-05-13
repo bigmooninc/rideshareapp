@@ -108,10 +108,11 @@
       grossEarned: event.detail.grossEarned,
       shiftLength: event.detail.shiftLength,
       netPerMile: event.detail.netPerMile,
+      timeOfDay: event.detail.timeOfDay,
       user: $session.user,
-      shiftDate: new Date(),
+      shiftDate: format(new Date(), "T"),
     };
-    // console.log("ShiftData: ", shiftData);
+    console.log("ShiftData: ", shiftData);
     const db = await getFirestore();
     const docRef = await addDoc(collection(db, `shifts`), shiftData);
     currentWeekShifts.addCurrentWeekShift(shiftData);
@@ -163,7 +164,7 @@
   }
   $: totalGrossEarned = shiftGrossEarned.reduce((a, b) => a + b, 0).toFixed(2);
 
-  // Calculating net earned per gour
+  // Calculating net earned per hour
   $: {
     shiftNetPerHour = [];
     $currentWeekShifts.forEach((s) => {
@@ -171,9 +172,19 @@
       shiftNetPerHour = shiftNetPerHour;
     });
   }
+
   $: net = shiftNetPerHour.reduce((a, b) => a + b, 0);
   $: averageNetPerHour = (net / shiftNetPerHour.length).toFixed(2);
-  $: averageNetPerMile = (net / totalMiles).toFixed(2);
+
+  $: {
+    shiftNetPerMile = [];
+    $currentWeekShifts.forEach((s) => {
+      shiftNetPerMile = [...shiftNetPerMile, parseFloat(s.netPerMile)];
+      shiftNetPerMile = shiftNetPerMile;
+    });
+  }
+  $: netPer = shiftNetPerMile.reduce((a, b) => a + b, 0);
+  $: averageNetPerMile = (netPer / shiftNetPerMile.length).toFixed(2);
 </script>
 
 <div class="page relative h-screen">
@@ -207,7 +218,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-10">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"
@@ -237,6 +248,35 @@
 
     <h3>This Week's Shifts</h3>
 
+    <div class="item_header flex flex-row items-center px-5 py-2 rounded">
+      <div class="w-20">
+        <p class="text-white">
+          <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
+          <!-- {shift.shiftDate} -->
+          <!-- {formatDate(parseInt(shift.shiftDate))} -->
+          Date
+        </p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">Miles</p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">MPG</p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">Gas Cost</p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">Earnings</p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">Net/Hour</p>
+      </div>
+      <div class="flex-1">
+        <p class="text-white text-center">Net/Mile</p>
+      </div>
+    </div>
+
     {#each $currentWeekShifts as shift, i}
       <ShiftDetail {shift} />
     {/each}
@@ -245,7 +285,8 @@
 
 <style>
   h3 {
-    @apply font-light text-2xl text-white relative py-3;
+    font-family: "Montserrat", sans-serif;
+    @apply font-bold text-xl text-white relative py-3;
   }
   .page {
     background-color: #0b0c10;
@@ -260,8 +301,13 @@
     background-color: white;
     width: 100%;
   }
-  .item {
-    background-color: #1f2833;
-    border-color: #1f2833;
+  .item_header {
+    /* background-color: #1f2833; */
+    /* border-color: #1f2833; */
+  }
+  p {
+    font-family: "Teko", sans-serif;
+    color: #66fcf1;
+    @apply text-2xl opacity-50;
   }
 </style>

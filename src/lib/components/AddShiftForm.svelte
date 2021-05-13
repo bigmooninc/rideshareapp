@@ -30,6 +30,7 @@
   let showGasPrice = false;
   let showSave = false;
   let showTimeOfDay = false;
+  let gasUsed, gasCost, netEarned, netPerHour, netPerMile;
 
   // Functions
   onMount(() => {
@@ -39,16 +40,17 @@
   });
 
   function addShift() {
-    const gasUsed = miles / milesPerGallon;
-    const gasCost = gasUsed * gasPrice;
-    const netEarned = grossEarned - gasCost;
-    const netPerHour = netEarned / shiftLength;
-    const netPerMile = netEarned / miles;
+    gasUsed = miles / milesPerGallon;
+    gasCost = gasUsed * gasPrice;
+    netEarned = grossEarned - gasCost;
+    netPerHour = netEarned / shiftLength;
+    netPerMile = netEarned / miles;
 
     dispatch("addShift", {
       miles,
       milesPerGallon,
       gasPrice,
+      gasCost,
       grossEarned,
       shiftLength,
       gasUsed,
@@ -56,6 +58,7 @@
       netEarned,
       netPerHour,
       netPerMile,
+      timeOfDay,
     });
   }
 

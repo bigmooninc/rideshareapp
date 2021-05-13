@@ -6,7 +6,7 @@
   const dispatch = createEventDispatcher();
 
   // Props
-  export let timeOfDay;
+  export let timeOfDay = "AM";
 
   // Vars
   // let timeOfDayInput;
