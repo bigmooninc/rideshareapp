@@ -315,7 +315,6 @@
   @media screen and (max-width: 767px) {
     .item_header {
       width: 750px;
-      background: #1f2833;
     }
   }
   p {

@@ -26,7 +26,7 @@
 </script>
 
 <nav
-  class="fixed w-full p-5 flex flex-row justify-between items-center shadow-md"
+  class="fixed w-full px-3 py-5 flex flex-row justify-between items-center shadow-md"
 >
   <p>
     <a svelte:prefetch href="/">Ride Share Stats</a>
