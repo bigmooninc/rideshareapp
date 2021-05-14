@@ -1,7 +1,10 @@
 <script>
+  import { createEventDispatcher } from "svelte";
   import { format, toDate } from "date-fns";
   import { quintOut } from "svelte/easing";
   import { flip } from "svelte/animate";
+
+  const dispatch = createEventDispatcher();
 
   // PROPS
   export let shift;
@@ -12,9 +15,13 @@
     let newDate = new Date(date);
     console.log(newDate);
   }
+
+  function remove() {
+    dispatch("removeShift");
+  }
 </script>
 
-<div class="item flex flex-row items-center px-5 py-3 rounded mb-2">
+<div class="relative item flex flex-row items-center px-5 py-3 rounded mb-2">
   <div class="w-16 md:w-20">
     <p class="text-white text-left">
       <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
@@ -52,6 +59,11 @@
     <p class="text-white text-center">
       ${shift.netPerMile.toFixed(2)}
     </p>
+  </div>
+  <div
+    class="absolute top-0 right-0 bottom-0 flex justify-center items-center w-10"
+  >
+    <a href="." on:click|preventDefault={remove} class="text-white">x</a>
   </div>
 </div>
 

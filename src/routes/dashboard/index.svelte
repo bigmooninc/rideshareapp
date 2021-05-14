@@ -19,6 +19,8 @@
   import {
     collection,
     addDoc,
+    doc,
+    deleteDoc,
     getFirestore,
     query,
     where,
@@ -34,6 +36,7 @@
   import StatBox from "$lib/components/StatBox.svelte";
   import AddShiftForm from "$lib/components/AddShiftForm.svelte";
   import ShiftDetail from "$lib/components/ShiftDetail.svelte";
+  import Index from "../index.svelte";
 
   // *** VARS ***
   let shiftArray = [];
@@ -46,6 +49,7 @@
   let showAddShiftForm = false;
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   let currentUser = $session.user;
+  let shiftView = "All";
 
   // *** FUNCTIONS ***
   onMount(async () => {
@@ -123,6 +127,12 @@
     // console.log(docRef);
   }
 
+  async function handleRemoveShift(shift) {
+    const db = await getFirestore();
+    await deleteDoc(doc(db, "shifts", shift));
+    currentWeekShifts.removeCurrentWeekShift(shift);
+  }
+
   //  REACTIVITY
 
   // Calculating total miles
@@ -188,6 +198,10 @@
   }
   $: netPer = shiftNetPerMile.reduce((a, b) => a + b, 0);
   $: averageNetPerMile = (netPer / shiftNetPerMile.length).toFixed(2);
+
+  $: amShifts = $currentWeekShifts.filter((s) => s.timeOfDay === "AM");
+  $: pmShifts = $currentWeekShifts.filter((s) => s.timeOfDay === "PM");
+  $: midShifts = $currentWeekShifts.filter((s) => s.timeOfDay === "Midday");
 </script>
 
 <div class="page relative h-screen">
@@ -251,8 +265,43 @@
         isDollarValue
       />
     </div>
-
-    <h3>This Week's Shifts</h3>
+    <div class="flex flex-col md:flex-row items-start md:items-end mb-3">
+      <h3 class="w-auto mr-10 mb-2 md:mb-0">This Week's Shifts</h3>
+      <ul class="flex flex-row items-start md:items-center justify-start">
+        <li>
+          <a
+            href="."
+            on:click|preventDefault={() => (shiftView = "All")}
+            class="text-xl md:text-base uppercase font-bold opacity-50 text-white pr-3 pl-0 md:pl-3"
+            >All</a
+          >
+        </li>
+        <li>
+          <a
+            href="."
+            on:click|preventDefault={() => (shiftView = "AM")}
+            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
+            >AM</a
+          >
+        </li>
+        <li>
+          <a
+            href="."
+            on:click|preventDefault={() => (shiftView = "Midday")}
+            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
+            >MID</a
+          >
+        </li>
+        <li>
+          <a
+            href="."
+            on:click|preventDefault={() => (shiftView = "PM")}
+            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
+            >PM</a
+          >
+        </li>
+      </ul>
+    </div>
 
     <div class="overflow-y-scroll">
       <div
@@ -285,11 +334,43 @@
           <p class="text-white text-center">Net/Mile</p>
         </div>
       </div>
-      {#each $currentWeekShifts as shift, index (shift)}
-        <div animate:flip={{ delay: 250, duration: 250, easing: quintOut }}>
-          <ShiftDetail {shift} />
-        </div>
-      {/each}
+      {#if shiftView === "All"}
+        {#each $currentWeekShifts as shift, index (shift)}
+          <div
+            animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+            in:fade={{ duration: 200 }}
+          >
+            <ShiftDetail {shift} on:removeShift={handleRemoveShift(shift)} />
+          </div>
+        {/each}
+      {:else if shiftView === "AM"}
+        {#each amShifts as shift, index (shift)}
+          <div
+            animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+            in:fade={{ duration: 200 }}
+          >
+            <ShiftDetail {shift} on:removeShift={handleRemoveShift(shift)} />
+          </div>
+        {/each}
+      {:else if shiftView === "Midday"}
+        {#each midShifts as shift, index (shift)}
+          <div
+            animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+            in:fade={{ duration: 200 }}
+          >
+            <ShiftDetail {shift} on:removeShift={handleRemoveShift(shift)} />
+          </div>
+        {/each}
+      {:else if shiftView === "PM"}
+        {#each pmShifts as shift, index (shift)}
+          <div
+            animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+            in:fade={{ duration: 200 }}
+          >
+            <ShiftDetail {shift} on:removeShift={handleRemoveShift(shift)} />
+          </div>
+        {/each}
+      {/if}
     </div>
   </div>
 </div>
@@ -297,7 +378,7 @@
 <style>
   h3 {
     font-family: "Montserrat", sans-serif;
-    @apply font-bold text-xl text-white relative py-3;
+    @apply font-bold text-white relative text-2xl md:text-xl;
   }
   .page {
     background-color: #0b0c10;
