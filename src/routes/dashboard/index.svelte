@@ -250,7 +250,7 @@
         isDollarValue
       />
       <StatBox
-        title="Gross Earned"
+        title="Earnings"
         value={totalGrossEarned > 0 ? totalGrossEarned : 0.0}
         isDollarValue
       />
@@ -266,38 +266,50 @@
       />
     </div>
     <div class="flex flex-col md:flex-row items-start md:items-end mb-3">
-      <h3 class="w-auto mr-10 mb-2 md:mb-0">This Week's Shifts</h3>
-      <ul class="flex flex-row items-start md:items-center justify-start">
+      <h3 class="w-full md:w-auto mr-10 mb-2 md:mb-0 text-center md:text-left">
+        This Week's Shifts
+      </h3>
+      <ul
+        class="flex flex-row items-start md:items-center justify-center md:justify-start w-full py-4 md:py-0"
+      >
         <li>
           <a
             href="."
             on:click|preventDefault={() => (shiftView = "All")}
-            class="text-xl md:text-base uppercase font-bold opacity-50 text-white pr-3 pl-0 md:pl-3"
-            >All</a
+            class="text-xl md:text-base uppercase font-normal pr-3 pl-0 md:pl-3 {shiftView ===
+            'All'
+              ? 'active'
+              : 'text-white opacity-50'}">All</a
           >
         </li>
         <li>
           <a
             href="."
             on:click|preventDefault={() => (shiftView = "AM")}
-            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
-            >AM</a
+            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
+            'AM'
+              ? 'active'
+              : 'text-white opacity-50'}">AM</a
           >
         </li>
         <li>
           <a
             href="."
             on:click|preventDefault={() => (shiftView = "Midday")}
-            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
-            >MID</a
+            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
+            'Midday'
+              ? 'active'
+              : 'text-white opacity-50'}">MID</a
           >
         </li>
         <li>
           <a
             href="."
             on:click|preventDefault={() => (shiftView = "PM")}
-            class="text-xl md:text-base uppercase font-bold opacity-50 text-white px-3"
-            >PM</a
+            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
+            'PM'
+              ? 'active'
+              : 'text-white opacity-50'}">PM</a
           >
         </li>
       </ul>
@@ -407,5 +419,8 @@
     font-family: "Teko", sans-serif;
     color: #66fcf1;
     @apply text-2xl opacity-50;
+  }
+  .active {
+    color: #66fcf1;
   }
 </style>
