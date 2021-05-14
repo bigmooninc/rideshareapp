@@ -63,10 +63,67 @@
 
 {#if showMobileNav}
   <div
-    in:fly={{ duration: 500, y: -1000, easing: quintOut }}
-    class="mobile_nav bg-black absolute top-0 bottom-0 left-0 w-full"
+    in:fly={{ duration: 400, y: -1000, easing: quintOut }}
+    out:fly={{ duration: 300, y: -1000, easing: quintIn }}
+    class="mobile_nav fixed top-0 bottom-0 left-0 w-full"
   >
-    <p class="text-white">Mobile Nav</p>
+    <ul class="pr-5 pb-10 flex flex-col justify-end items-end h-full">
+      {#if user}
+        <li class="mobile_li">
+          <a
+            href="dashboard"
+            sveltekit:prefetch
+            on:click={() => (showMobileNav = false)}>Dashboard</a
+          >
+        </li>
+        <li class="mobile_li">
+          <a
+            href="shifts"
+            sveltekit:prefetch
+            on:click={() => (showMobileNav = false)}>Shifts</a
+          >
+        </li>
+        <li class="mobile_li">
+          <a href="." on:click|preventDefault={handleLogout} sveltekit:prefetch
+            >Logout</a
+          >
+        </li>
+      {:else}
+        <li class="mobile_li">
+          <a
+            href="/"
+            sveltekit:prefetch
+            on:click={() => (showMobileNav = false)}>Home</a
+          >
+        </li>
+        <li class="mobile_li">
+          <a
+            href="register"
+            sveltekit:prefetch
+            on:click={() => (showMobileNav = false)}>Register</a
+          >
+        </li>
+        <li class="mobile_li">
+          <a
+            href="login"
+            sveltekit:prefetch
+            on:click={() => (showMobileNav = false)}>Sign In</a
+          >
+        </li>
+      {/if}
+      <li class="mobile_li mt-5">
+        <a
+          href="."
+          on:click={() => (showMobileNav = false)}
+          class="opacity-50 focus:outline-none">[ Close ]</a
+        >
+      </li>
+    </ul>
+    <button class="focus:outline-none" on:click={() => (showMobileNav = false)}>
+      <i
+        class="fal fa-times text-white text-4xl absolute right-0 top-0 mr-3 mt-5"
+      />
+    </button>
   </div>
 {/if}
 
@@ -96,5 +153,11 @@
   }
   span {
     color: #66fcf1;
+  }
+  .mobile_nav {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+  .mobile_li {
+    @apply font-light text-2xl leading-loose;
   }
 </style>
