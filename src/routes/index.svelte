@@ -12,18 +12,7 @@
 </script>
 
 <script>
-  import { goto } from "$app/navigation";
   import { session } from "$app/stores";
-  import { getAuth, signOut } from "@firebase/auth";
-
-  // Functions
-  function handleLogout() {
-    const auth = getAuth();
-    signOut(auth).then(() => {
-      $session.user = null;
-      goto("login");
-    });
-  }
 </script>
 
 <div class="border-b border-gray-800">
@@ -38,18 +27,19 @@
       </p>
       <div class="flex flex-row items-center">
         <a
+          sveltekit:prefetch
           href="register"
           class="register_link border rounded-full font-bold text-base px-8 py-3"
           >Get Started</a
         >
-        <a href="login" class="login_link text-white bg-none px-8">Sign In</a>
+        <a
+          sveltekit:prefetch
+          href="login"
+          class="login_link text-white bg-none px-8">Sign In</a
+        >
       </div>
     </div>
   </div>
-
-  <!-- <a class="text-white" href="." on:click|preventDefault={handleLogout}
-    >Logout</a
-  > -->
 </div>
 
 <style>

@@ -31,9 +31,15 @@
           placeholder="Confirm your password"
         />
       </div>
-      <button type="submit">Register</button>
+      <button type="submit" class="focus:outline-none">Register</button>
     </form>
-    <p>Already have an account? <a href="login" class="form_link">Login</a></p>
+    <p>
+      Already have an account? <a
+        sveltekit:prefetch
+        href="login"
+        class="form_link">Login</a
+      >
+    </p>
   </div>
 </div>
 

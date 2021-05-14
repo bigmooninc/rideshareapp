@@ -26,7 +26,11 @@
       <button type="submit" class="focus:outline-none">Login</button>
     </form>
     <p>
-      Don't have an account? <a href="register" class="form_link">Register</a>
+      Don't have an account? <a
+        sveltekit:prefetch
+        href="register"
+        class="form_link">Register</a
+      >
     </p>
   </div>
 </div>
