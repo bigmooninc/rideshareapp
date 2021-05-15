@@ -238,7 +238,7 @@
       {/if}
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-10">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-16">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
         title="MPG"
@@ -266,53 +266,39 @@
       />
     </div>
     <div class="flex flex-col md:flex-row items-start md:items-end mb-3">
-      <h3 class="w-full md:w-auto mr-10 mb-2 md:mb-0 text-center md:text-left">
+      <h3 class="w-full flex-1 mr-10 mb-2 md:mb-0 text-center md:text-left">
         This Week's Shifts
       </h3>
-      <ul
-        class="flex flex-row items-start md:items-center justify-center md:justify-start w-full py-4 md:py-0"
-      >
-        <li>
-          <a
-            href="."
-            on:click|preventDefault={() => (shiftView = "All")}
-            class="text-xl md:text-base uppercase font-normal pr-3 pl-0 md:pl-3 {shiftView ===
-            'All'
-              ? 'active'
-              : 'text-white opacity-50'}">All</a
-          >
-        </li>
-        <li>
-          <a
-            href="."
-            on:click|preventDefault={() => (shiftView = "AM")}
-            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
-            'AM'
-              ? 'active'
-              : 'text-white opacity-50'}">AM</a
-          >
-        </li>
-        <li>
-          <a
-            href="."
-            on:click|preventDefault={() => (shiftView = "Midday")}
-            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
-            'Midday'
-              ? 'active'
-              : 'text-white opacity-50'}">MID</a
-          >
-        </li>
-        <li>
-          <a
-            href="."
-            on:click|preventDefault={() => (shiftView = "PM")}
-            class="text-xl md:text-base uppercase font-normal px-3 {shiftView ===
-            'PM'
-              ? 'active'
-              : 'text-white opacity-50'}">PM</a
-          >
-        </li>
-      </ul>
+      <div class="flex flex-row items-center">
+        <a
+          href="."
+          on:click|preventDefault={() => (shiftView = "All")}
+          class="all {shiftView === 'All'
+            ? 'active'
+            : 'bg-transparent text-white'}">All</a
+        >
+        <a
+          href="."
+          on:click|preventDefault={() => (shiftView = "AM")}
+          class="morning {shiftView === 'AM'
+            ? 'active'
+            : 'bg-transparent text-white'}">AM</a
+        >
+        <a
+          href="."
+          on:click|preventDefault={() => (shiftView = "Midday")}
+          class="midday {shiftView === 'Midday'
+            ? 'active'
+            : 'bg-transparent text-white'}">MID</a
+        >
+        <a
+          href="."
+          on:click|preventDefault={() => (shiftView = "PM")}
+          class="evening {shiftView === 'PM'
+            ? 'active'
+            : 'bg-transparent text-white'}">PM</a
+        >
+      </div>
     </div>
 
     <div class="overflow-y-scroll">
@@ -421,6 +407,33 @@
     @apply text-2xl opacity-50;
   }
   .active {
-    color: #66fcf1;
+    background-color: #66fcf1;
+    color: #1f2833;
+  }
+  .all,
+  .morning,
+  .midday,
+  .evening {
+    border-color: #66fcf1;
+    @apply py-2 border-b border-t text-xs transition-all duration-200;
+  }
+  .all:hover,
+  .morning:hover,
+  .midday:hover,
+  .evening:hover {
+    background-color: #66fcf1;
+    color: #1f2833;
+  }
+  .all {
+    @apply border-l pl-5 pr-4 rounded-l-full;
+  }
+  .morning {
+    @apply border-l border-r px-4;
+  }
+  .midday {
+    @apply border-r px-4;
+  }
+  .evening {
+    @apply border-r pr-5 pl-4 rounded-r-full;
   }
 </style>
