@@ -28,6 +28,7 @@
   } from "firebase/firestore";
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
+  import { v4 as uuidv4 } from "uuid";
 
   // *** DATA STORES ***
   import currentWeekShifts from "$lib/stores/current-shifts";
@@ -36,7 +37,6 @@
   import StatBox from "$lib/components/StatBox.svelte";
   import AddShiftForm from "$lib/components/AddShiftForm.svelte";
   import ShiftDetail from "$lib/components/ShiftDetail.svelte";
-  import Index from "../index.svelte";
 
   // *** VARS ***
   let shiftArray = [];
@@ -104,6 +104,7 @@
   async function handleAddShift(event) {
     event.preventDefault();
     const shiftData = {
+      shiftid: uuidv4(),
       gasUsed: event.detail.gasUsed,
       gasCost: event.detail.gasCost,
       netEarned: event.detail.netEarned,
@@ -129,7 +130,7 @@
 
   async function handleRemoveShift(shift) {
     const db = await getFirestore();
-    await deleteDoc(doc(db, "shifts", shift));
+    await deleteDoc(doc(db, "shifts", "id"));
     currentWeekShifts.removeCurrentWeekShift(shift);
   }
 
@@ -266,10 +267,12 @@
       />
     </div>
     <div class="flex flex-col md:flex-row items-start md:items-end mb-3">
-      <h3 class="w-full flex-1 mr-10 mb-2 md:mb-0 text-center md:text-left">
+      <h3 class="w-full flex-1 mr-10 mb-5 md:mb-0 text-center md:text-left">
         This Week's Shifts
       </h3>
-      <div class="flex flex-row items-center">
+      <div
+        class="flex flex-row items-center justify-center md:justify-end w-full md:flex-1 mb-2 md:mb-0"
+      >
         <a
           href="."
           on:click|preventDefault={() => (shiftView = "All")}

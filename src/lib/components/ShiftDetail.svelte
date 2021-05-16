@@ -21,7 +21,9 @@
   }
 </script>
 
-<div class="relative item flex flex-row items-center px-5 py-3 rounded mb-2">
+<div
+  class="relative item flex flex-row items-center px-5 py-3 rounded mb-2 overflow-hidden"
+>
   <div class="w-16 md:w-20">
     <p class="text-white text-left">
       <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
@@ -61,9 +63,11 @@
     </p>
   </div>
   <div
-    class="absolute top-0 right-0 bottom-0 flex justify-center items-center w-10"
+    class="actions absolute top-0 right-0 bottom-0 flex justify-center items-center w-12"
   >
-    <a href="." on:click|preventDefault={remove} class="text-white">x</a>
+    <a href="." on:click|preventDefault={remove}
+      ><i class="fal fa-trash text-xl" /></a
+    >
   </div>
 </div>
 
@@ -81,5 +85,14 @@
   p {
     font-family: "Teko", sans-serif;
     @apply text-2xl;
+  }
+  .actions {
+    border-left: 1px solid #36817f;
+    color: #36817f;
+    @apply transition-all duration-200;
+  }
+  .actions:hover {
+    background-color: #36817f;
+    color: #fff;
   }
 </style>

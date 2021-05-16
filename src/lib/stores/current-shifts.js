@@ -17,7 +17,7 @@ const customCurrentWeekShiftsStore = {
   },
   removeCurrentWeekShift: (shift) => {
     currentWeekShifts.update(items => {
-      return items.filter(i => i.miles !== shift.miles)
+      return items.filter(i => i.shiftId !== shift.shiftId)
     })
   }
 }
