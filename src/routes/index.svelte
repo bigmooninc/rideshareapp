@@ -17,7 +17,9 @@
 
 <div class="border-b border-gray-800">
   <div class="w-full max-w-5xl mx-auto px-5 md:px-0">
-    <div class="flex flex-col justify-center items-start pt-48 pb-32 w-2/3">
+    <div
+      class="flex flex-col justify-center items-start pt-48 pb-32 w-full md:w-2/3"
+    >
       <h1>How much is your driving making you?</h1>
       <p class="mr-0 md:mr-16 md:overflow-y-hiddenmr-32">
         Get an accurate picture of how much you are actually making per hour
