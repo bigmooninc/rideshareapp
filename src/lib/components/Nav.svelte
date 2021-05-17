@@ -86,9 +86,7 @@
           >
         </li>
         <li class="mobile_li">
-          <a href="." on:click|preventDefault={handleLogout} sveltekit:prefetch
-            >Logout</a
-          >
+          <a href="." on:click|preventDefault={handleLogout}>Logout</a>
         </li>
       {:else}
         <li class="mobile_li">
@@ -121,11 +119,15 @@
         >
       </li>
     </ul>
-    <button class="focus:outline-none" on:click={() => (showMobileNav = false)}>
+    <a
+      href="."
+      class="focus:outline-none"
+      on:click|preventDefault={() => (showMobileNav = false)}
+    >
       <i
         class="fal fa-times text-white text-4xl absolute right-0 top-0 mr-3 mt-5"
       />
-    </button>
+    </a>
   </div>
 {/if}
 
