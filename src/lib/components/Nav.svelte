@@ -155,7 +155,7 @@
     color: #66fcf1;
   }
   .mobile_nav {
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.95);
   }
   .mobile_li {
     @apply font-light text-2xl leading-loose;
