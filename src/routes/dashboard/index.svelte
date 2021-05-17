@@ -4,7 +4,7 @@
     if (!user) {
       return {
         status: 302,
-        redirect: "/",
+        redirect: ".",
       };
     }
     return {};
@@ -244,7 +244,7 @@
     <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-16">
       <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
       <StatBox
-        title="MPG"
+        title="AVG MPG"
         value={averageMilesPerGallon > 0 ? averageMilesPerGallon : 0}
       />
       <StatBox
