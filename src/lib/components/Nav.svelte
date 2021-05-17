@@ -18,6 +18,7 @@
       .then(() => {
         console.log("Sign out successful");
         $session.user = null;
+        showMobileNav = false;
       })
       .catch((error) => {
         console.log(error);
