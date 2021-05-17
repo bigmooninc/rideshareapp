@@ -108,7 +108,7 @@
     font-family: "Montserrat", sans-serif;
   }
   h1 {
-    @apply font-bold text-white text-6xl mb-3;
+    @apply font-bold text-white text-5xl md:text-6xl mb-3;
   }
   p {
     font-family: "Montserrat", sans-serif;

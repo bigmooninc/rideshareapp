@@ -19,6 +19,7 @@
         console.log("Sign out successful");
         $session.user = null;
         showMobileNav = false;
+        goto("/");
       })
       .catch((error) => {
         console.log(error);
