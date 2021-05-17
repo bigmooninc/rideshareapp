@@ -19,6 +19,7 @@
   import {
     collection,
     addDoc,
+    setDoc,
     doc,
     deleteDoc,
     getFirestore,
@@ -103,8 +104,9 @@
 
   async function handleAddShift(event) {
     event.preventDefault();
+    const getId = uuidv4();
     const shiftData = {
-      shiftid: uuidv4(),
+      shiftId: getId,
       gasUsed: event.detail.gasUsed,
       gasCost: event.detail.gasCost,
       netEarned: event.detail.netEarned,
@@ -121,16 +123,16 @@
     };
     console.log("ShiftData: ", shiftData);
     const db = await getFirestore();
-    const docRef = await addDoc(collection(db, `shifts`), shiftData);
+    const docRef = await setDoc(doc(db, `shifts`, `${getId}`), shiftData);
     currentWeekShifts.addCurrentWeekShift(shiftData);
     showAddShiftForm = false;
     clearState();
-    // console.log(docRef);
+    console.log(docRef);
   }
 
   async function handleRemoveShift(shift) {
     const db = await getFirestore();
-    await deleteDoc(doc(db, "shifts", "id"));
+    await deleteDoc(doc(db, "shifts", shift.shiftId));
     currentWeekShifts.removeCurrentWeekShift(shift);
   }
 

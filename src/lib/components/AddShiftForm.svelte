@@ -13,6 +13,7 @@
   import AddGrossEarned from "$lib/components/AddGrossEarned.svelte";
   import SaveShift from "$lib/components/SaveShift.svelte";
   import AddTimeOfDay from "$lib/components/AddTimeOfDay.svelte";
+  import { prevent_default } from "svelte/internal";
 
   // Props
   export let miles,
@@ -65,6 +66,7 @@
   function cancel() {
     dispatch("cancelAddShift");
   }
+
   function handleAddMiles(event) {
     miles = event.detail.miles;
     showMiles = false;
@@ -101,8 +103,11 @@
 
 <div
   in:fade={{ duration: 200 }}
-  class="container w-full max-w-full md:max-w-xs h-96 overflow-hidden"
+  class="container relative w-full max-w-full md:max-w-xs h-96 overflow-hidden"
 >
+  <p class="absolute bottom-0 left-0 w-full text-center text-white mb-6">
+    <a href="." on:click|preventDefault={cancel}>Cancel</a>
+  </p>
   {#if showMiles}
     <AddMiles {miles} on:addMiles={handleAddMiles} />
   {/if}

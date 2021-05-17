@@ -63,10 +63,10 @@
     </p>
   </div>
   <div
-    class="actions absolute top-0 right-0 bottom-0 flex justify-center items-center w-12"
+    class="actions absolute top-0 right-0 bottom-0 flex justify-around items-center w-12"
   >
-    <a href="." on:click|preventDefault={remove}
-      ><i class="fal fa-trash text-xl" /></a
+    <a href="." on:click|preventDefault={remove(shift)}
+      ><i class="fal fa-times text-xl" /></a
     >
   </div>
 </div>
