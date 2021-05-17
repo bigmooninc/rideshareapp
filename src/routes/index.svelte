@@ -13,6 +13,9 @@
 
 <script>
   import { session } from "$app/stores";
+
+  // Components
+  import Footer from "$lib/components/Footer.svelte";
 </script>
 
 <div class="border-b border-gray-800">
@@ -56,13 +59,13 @@
       keep track of what I was spending on gas.
     </p>
     <h3 class="font-bold text-4xl mb-2 leading-none mt-10">
-      What information is being tracked?
+      What information needs to be tracked?
     </h3>
     <p class="body_copy">
       There are sevent data points that are being captured when adding a new
       shift:
     </p>
-    <ul class="p-0 pl-10 list-disc m-0">
+    <ul class="px-10 list-disc m-0 mb-10">
       <li class="font-light opacit-100 text-base">
         <span class="font-bold">Miles driven:</span> captured using in the car with
         trip miles
@@ -86,8 +89,17 @@
         <span class="font-bold">Time of day:</span> AM, Midday, PM
       </li>
     </ul>
+
+    <a
+      sveltekit:prefetch
+      href="register"
+      class="register_link border rounded-full font-bold text-base px-8 py-3"
+      >Get Started</a
+    >
   </div>
 </div>
+
+<Footer />
 
 <style>
   h1,
