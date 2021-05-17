@@ -18,7 +18,7 @@
 <div class="border-b border-gray-800">
   <div class="w-full max-w-5xl mx-auto px-5 md:px-0">
     <div
-      class="flex flex-col justify-center items-start pt-48 pb-32 w-full md:w-2/3"
+      class="flex flex-col justify-center items-start pt-36 md:pt-48 pb-32 w-full md:w-2/3"
     >
       <h1>How much is your driving making you?</h1>
       <p class="mr-0 md:mr-16 md:overflow-y-hiddenmr-32">
@@ -64,23 +64,26 @@
     </p>
     <ul class="p-0 pl-10 list-disc m-0">
       <li class="font-light opacit-100 text-base">
-        Miles driven: captured using in the car with trip miles
+        <span class="font-bold">Miles driven:</span> captured using in the car with
+        trip miles
       </li>
       <li class="font-light opacit-100 text-base">
-        Miles per gallon: captured in the car with mpg tracking
+        <span class="font-bold">Miles per gallon:</span> captured in the car with
+        mpg tracking
       </li>
       <li class="font-light opacit-100 text-base">
-        Gas price: the last price paid for gas in the tank
+        <span class="font-bold">Gas price:</span> the last price paid for gas in
+        the tank
       </li>
       <li class="font-light opacit-100 text-base">
-        Gross Earned: obtained from mobile app
+        <span class="font-bold">Gross Earned:</span> obtained from mobile app
       </li>
       <li class="font-light opacit-100 text-base">
-        Number of hours driving: calculated from the time I begin driving until
-        I officially stop
+        <span class="font-bold">Hours driven:</span> number of hours calculated from
+        the time I begin driving until I officially stop
       </li>
       <li class="font-light opacit-100 text-base">
-        Time of Day (AM, Midday, PM)
+        <span class="font-bold">Time of day:</span> AM, Midday, PM
       </li>
     </ul>
   </div>
