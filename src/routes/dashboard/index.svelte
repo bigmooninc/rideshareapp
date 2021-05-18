@@ -209,10 +209,10 @@
 
 <div class="page relative h-screen">
   <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
-    <div class="relative flex flex-row justify-between items-center mb-5">
-      <div class="flex-1 flex flex-row items-center">
-        <h3 class="hidden md:visible">This Week's Totals & Averages -</h3>
-        <h3>
+    <div class="relative flex flex-row justify-between items-center mb-3">
+      <div class="flex-1 flex flex-row items-end">
+        <!-- <h3 class="hidden md:block py-4">This Week's Totals & Averages -</h3> -->
+        <h3 class="py-2">
           {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
           - {format(
             new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
@@ -338,7 +338,7 @@
         </div>
       </div>
       {#if shiftView === "All"}
-        {#each $currentWeekShifts as shift, index (shift)}
+        {#each $currentWeekShifts.reverse() as shift, index (shift)}
           <div
             animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
             in:fade={{ duration: 200 }}

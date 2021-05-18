@@ -26,16 +26,13 @@
 </script>
 
 <div
-  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
+  in:fade={{ delay: 200, duration: 300 }}
   out:fade={{ duration: 0 }}
   class="relative"
 >
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How long were you on the road?</h3>
     <input type="text" bind:value={shiftLength} bind:this={shiftLengthInput} />
-    <button on:click={add}>
-      <i class="far fa-long-arrow-right text-white text-3xl" />
-    </button>
   </div>
 </div>
 

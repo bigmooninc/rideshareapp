@@ -32,6 +32,7 @@
   let showSave = false;
   let showTimeOfDay = false;
   let gasUsed, gasCost, netEarned, netPerHour, netPerMile;
+  let layer = 1;
 
   // Functions
   onMount(() => {
@@ -99,6 +100,14 @@
     showTimeOfDay = false;
     showSave = true;
   }
+
+  function nextPage() {
+    return (layer += 1);
+  }
+
+  function prevPage() {
+    return (layer -= 1);
+  }
 </script>
 
 <div
@@ -108,7 +117,7 @@
   <p class="absolute bottom-0 left-0 w-full text-center text-white mb-6">
     <a href="." on:click|preventDefault={cancel}>Cancel</a>
   </p>
-  {#if showMiles}
+  <!-- {#if showMiles}
     <AddMiles {miles} on:addMiles={handleAddMiles} />
   {/if}
 
@@ -130,7 +139,7 @@
 
   {#if showTimeOfDay}
     <AddTimeOfDay {timeOfDay} on:addTimeOfDay={handleTimeOfDay} />
-  {/if}
+  {/if} -->
 
   {#if showSave}
     <SaveShift
@@ -143,6 +152,38 @@
       on:saveShift={addShift}
     />
   {/if}
+
+  {#if layer === 1}
+    <AddMiles {miles} />
+  {:else if layer === 2}
+    <AddMpg {milesPerGallon} />
+  {:else if layer === 3}
+    <AddGasPrice {gasPrice} />
+  {:else if layer === 4}
+    <AddGrossEarned {grossEarned} />
+  {:else if layer === 5}
+    <AddShiftLength {shiftLength} />
+  {:else if layer === 6}
+    <AddTimeOfDay {timeOfDay} />
+  {:else if layer === 7}
+    <SaveShift
+      {miles}
+      {milesPerGallon}
+      {grossEarned}
+      {gasPrice}
+      {shiftLength}
+      {timeOfDay}
+    />
+  {:else if layer === 8}{/if}
+
+  <div class="flex flex-row justify-center items-center">
+    <a href="." on:click|preventDefault={() => (layer -= 1)} class="text-white">
+      <i class="far fa-long-arrow-left text-3xl mr-2" />
+    </a>
+    <a href="." on:click|preventDefault={() => (layer += 1)} class="text-white">
+      <i class="far fa-long-arrow-right text-3xl ml-2" />
+    </a>
+  </div>
 </div>
 
 <style>

@@ -41,7 +41,7 @@
 </script>
 
 <div
-  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
+  in:fade={{ delay: 200, duration: 300 }}
   out:fade={{ duration: 0 }}
   class="relative"
 >
@@ -70,9 +70,6 @@
           : 'bg-transparent text-white'}">PM</a
       >
     </div>
-    <a href="." on:click|preventDefault={add} class="text-white">
-      <i class="far fa-long-arrow-right text-3xl" />
-    </a>
   </div>
 </div>
 

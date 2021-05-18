@@ -29,9 +29,10 @@
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles did you drive?</h3>
     <input type="text" bind:value={miles} bind:this={milesInput} />
-    <a href="." on:click|preventDefault={add} class="text-white">
-      <i class="far fa-long-arrow-right text-3xl" />
-    </a>
+    <!-- <a href="." on:click|preventDefault={add} class="text-white">
+      <i class="far fa-long-arrow-left text-3xl mr-2 opacity-25" />
+      <i class="far fa-long-arrow-right text-3xl ml-2" />
+    </a> -->
   </div>
 </div>
 

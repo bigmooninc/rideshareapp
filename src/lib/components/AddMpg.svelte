@@ -25,16 +25,10 @@
   }
 </script>
 
-<div
-  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
-  out:fade={{ duration: 0 }}
->
+<div in:fade={{ delay: 200, duration: 300 }} out:fade={{ duration: 0 }}>
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles per gallon?</h3>
     <input type="text" bind:value={milesPerGallon} bind:this={mpgInput} />
-    <a href="." on:click|preventDefault={add} class="text-white">
-      <i class="far fa-long-arrow-right text-3xl" />
-    </a>
   </div>
 </div>
 

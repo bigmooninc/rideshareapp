@@ -14,7 +14,7 @@
   .box {
     background-color: #1f2833;
     border-color: #1f2833;
-    @apply border-2 rounded px-6 py-8 flex flex-col justify-center items-center;
+    @apply border-2 rounded px-6 pt-8 pb-6 flex flex-col justify-center items-center;
   }
   h3 {
     color: #66fcf1;
