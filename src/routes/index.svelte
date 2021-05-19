@@ -38,7 +38,7 @@
         <a
           sveltekit:prefetch
           href="login"
-          class="login_link text-white bg-none px-8">Sign In</a
+          class="login_link text-white bg-none px-8 hover:underline">Sign In</a
         >
       </div>
     </div>
@@ -47,26 +47,23 @@
 <div class="bg-white">
   <div class="w-full max-w-4xl mx-auto px-5 md:px-0 py-16">
     <h3 class="font-bold text-4xl mb-2 leading-none">
-      Why build this application?
+      Why did I build this app?
     </h3>
     <p class="body_copy">
       When freelance work slowed down I decided to start driving for Uber/Lyft
       because I could do it whenever I wanted, and could stop and start when I
       pleased. Since I was going to be putting a good bit of miles on my car,
       and spending extra money in gas, I wanted to be able to determine if the
-      amount that I made per hour made it worthwhile. In order to do that I had
-      to keep track of how long I was actually spending on the road, and also
-      keep track of what I was spending on gas.
+      amount that I made per hour made it worthwhile. So I built this app.
     </p>
     <h3 class="font-bold text-4xl mb-2 leading-none mt-10">
-      What information needs to be tracked?
+      What data am I tracking?
     </h3>
 
     <p class="body_copy">
-      There are sevent data points that are being captured when adding a new
-      shift:
+      There are six data points that are being captured when adding a new shift:
     </p>
-    <ul class="px-10 list-disc m-0 mb-10">
+    <ul class="px-5 list-disc m-0 mb-5">
       <li class="font-light opacit-100 text-base">
         <span class="font-bold">Miles driven:</span> captured using in the car with
         trip miles
@@ -91,12 +88,23 @@
       </li>
     </ul>
 
-    <a
+    <p class="body_copy">
+      These data points are used to obtain other data, such as the actual gas
+      cost for the shift, the net earned per hour, and the net earned per mile.
+      These metrics help to determine if driving is worth the time.
+    </p>
+
+    <p class="body_copy">
+      Below is a sample of what the dashboard looks like. It hightlights the
+      current week of data and lists the individual shifts below.
+    </p>
+
+    <!-- <a
       sveltekit:prefetch
       href="register"
       class="register_link border rounded-full font-bold text-base px-8 py-3"
       >Get Started</a
-    >
+    > -->
 
     <img src="/dashboardview.png" alt="" class="w-full mt-10" />
   </div>
@@ -129,6 +137,6 @@
   }
   .body_copy {
     font-family: "Montserrat", sans-serif;
-    @apply text-lg font-light opacity-100 text-black;
+    @apply text-lg font-light opacity-100 text-black mb-5;
   }
 </style>
