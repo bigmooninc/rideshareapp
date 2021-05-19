@@ -26,6 +26,7 @@
     getFirestore,
     query,
     where,
+    orderBy,
     getDocs,
   } from "firebase/firestore";
   import { flip } from "svelte/animate";
@@ -72,6 +73,7 @@
     const db = await getFirestore();
     const q = await query(
       collection(db, "shifts"),
+      orderBy("shiftDate"),
       where(
         "user",
         "==",
