@@ -247,6 +247,7 @@
       {/if}
       {#if showAddShiftForm}
         <AddShiftForm
+          on:cancelAddShiftForm={cancelAddShiftForm}
           on:cancelAddShift={cancelAddShiftForm}
           on:addShift={handleAddShift}
         />

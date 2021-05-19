@@ -31,11 +31,6 @@
   let layer = 1;
 
   // Functions
-  onMount(() => {
-    // setTimeout(() => {
-    //   milesInput.focus();
-    // }, 200);
-  });
 
   function addShift() {
     gasUsed = $shiftData.miles / $shiftData.milesPerGallon;
@@ -62,56 +57,20 @@
   function cancel() {
     dispatch("cancelAddShift");
   }
-
-  // function handleAddMiles(event) {
-  //   miles = event.detail.miles;
-  //   showMiles = false;
-  //   showMpg = true;
-  // }
-
-  // function handleAddMpg(event) {
-  //   milesPerGallon = event.detail.milesPerGallon;
-  //   showMpg = false;
-  //   showGasPrice = true;
-  //   console.log("Miles", miles);
-  // }
-  // function handleAddGasPrice(event) {
-  //   gasPrice = event.detail.gasPrice;
-  //   showGasPrice = false;
-  //   showGrossEarned = true;
-  // }
-  // function handleGrossEarned(event) {
-  //   grossEarned = event.detail.grossEarned;
-  //   showGrossEarned = false;
-  //   showShiftLength = true;
-  // }
-  // function handleShiftLength(event) {
-  //   shiftLength = event.detail.shiftLength;
-  //   showShiftLength = false;
-  //   showTimeOfDay = true;
-  // }
-  // function handleTimeOfDay(event) {
-  //   timeOfDay = event.detail.timeOfDay;
-  //   showTimeOfDay = false;
-  //   showSave = true;
-  // }
-
-  function nextPage() {
-    return (layer += 1);
-  }
-
-  function prevPage() {
-    return (layer -= 1);
+  function cancelAddShift() {
+    dispatch("cancelAddShiftForm");
   }
 </script>
 
 <div
   in:fade={{ duration: 200 }}
-  class="container relative w-full max-w-full md:max-w-sm h-96 overflow-hidden"
+  class="container relative w-full max-w-full md:max-w-sm overflow-hidden"
 >
-  <p class="absolute bottom-0 left-0 w-full text-center text-white mb-6">
-    <a href="." on:click|preventDefault={cancel}>Cancel</a>
-  </p>
+  {#if layer < 7}
+    <p class="absolute bottom-0 left-0 w-full text-center text-white mb-6">
+      <a href="." on:click|preventDefault={cancel}>Cancel</a>
+    </p>
+  {/if}
 
   {#if layer === 1}
     <AddMiles />
@@ -126,18 +85,17 @@
   {:else if layer === 6}
     <AddTimeOfDay />
   {:else if layer === 7}
-    <SaveShift on:saveShift={addShift} />
+    <SaveShift on:saveShift={addShift} on:cancelShift={cancelAddShift} />
   {/if}
   {#if layer < 7}
     <div class="flex flex-row justify-center items-center">
-      <a
-        href="."
-        on:click|preventDefault={() => (layer -= 1)}
-        class="text-white"
+      <button
+        on:click={() => (layer -= 1)}
+        class="text-white {layer <= 1 ? 'cursor-default opacity-50' : ''}"
         disabled={layer <= 1}
       >
         <i class="far fa-long-arrow-left text-3xl mr-2" />
-      </a>
+      </button>
       <a
         href="."
         on:click|preventDefault={() => (layer += 1)}
@@ -153,7 +111,7 @@
   .container {
     /* width: 100%;
     max-width: 300px; */
-    /* height: 330px; */
+    height: 400px;
     background-color: rgba(11, 12, 16, 0.9);
     border: 2px solid #1f2833;
     @apply absolute right-0 top-0 p-8 z-20 rounded-lg shadow-md flex flex-col justify-center items-center;
@@ -165,6 +123,6 @@
     @apply border border-gray-200 font-light text-base w-full p-2 rounded focus:outline-none;
   }
   button {
-    @apply font-medium text-sm text-white px-8 py-3 rounded bg-black border border-black focus:outline-none;
+    @apply font-medium text-sm text-white px-3 py-3 rounded bg-black border border-black focus:outline-none;
   }
 </style>

@@ -9,6 +9,9 @@
   function add() {
     dispatch("saveShift");
   }
+  function cancel() {
+    dispatch("cancelShift");
+  }
 </script>
 
 <div
@@ -46,7 +49,12 @@
     </div>
     <div class="flex flex-row items-center">
       <button on:click={add}>Save Shift</button>
-      <a href="." class="text-red-500 pl-5">Cancel</a>
+      <a
+        href="."
+        on:click|preventDefault={cancel}
+        class="text-white pl-5 opacity-50 hover:opacity-100 transition-opacity duration-200"
+        >Cancel</a
+      >
     </div>
   </div>
 </div>
