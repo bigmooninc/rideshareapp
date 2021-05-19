@@ -2,6 +2,7 @@
   import { createEventDispatcher, onMount } from "svelte";
   import { fade } from "svelte/transition";
   import Datepicker from "svelte-calendar";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
@@ -16,12 +17,7 @@
   import { prevent_default } from "svelte/internal";
 
   // Props
-  export let miles,
-    milesPerGallon,
-    gasPrice,
-    grossEarned,
-    shiftLength,
-    timeOfDay;
+  // let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
 
   // Vars
   let showMiles = true;
@@ -42,25 +38,24 @@
   });
 
   function addShift() {
-    gasUsed = miles / milesPerGallon;
-    gasCost = gasUsed * gasPrice;
-    netEarned = grossEarned - gasCost;
-    netPerHour = netEarned / shiftLength;
-    netPerMile = netEarned / miles;
+    gasUsed = $shiftData.miles / $shiftData.milesPerGallon;
+    gasCost = gasUsed * $shiftData.gasPrice;
+    netEarned = $shiftData.grossEarned - gasCost;
+    netPerHour = netEarned / $shiftData.shiftLength;
+    netPerMile = netEarned / $shiftData.miles;
 
     dispatch("addShift", {
-      miles,
-      milesPerGallon,
-      gasPrice,
-      gasCost,
-      grossEarned,
-      shiftLength,
+      miles: $shiftData.miles,
+      milesPerGallon: $shiftData.milesPerGallon,
+      gasPrice: $shiftData.gasPrice,
+      shiftLength: $shiftData.shiftLength,
+      grossEarned: $shiftData.grossEarned,
+      timeOfDay: $shiftData.timeOfDay,
       gasUsed,
       gasCost,
       netEarned,
       netPerHour,
       netPerMile,
-      timeOfDay,
     });
   }
 
@@ -68,38 +63,38 @@
     dispatch("cancelAddShift");
   }
 
-  function handleAddMiles(event) {
-    miles = event.detail.miles;
-    showMiles = false;
-    showMpg = true;
-  }
+  // function handleAddMiles(event) {
+  //   miles = event.detail.miles;
+  //   showMiles = false;
+  //   showMpg = true;
+  // }
 
-  function handleAddMpg(event) {
-    milesPerGallon = event.detail.milesPerGallon;
-    showMpg = false;
-    showGasPrice = true;
-    console.log("Miles", miles);
-  }
-  function handleAddGasPrice(event) {
-    gasPrice = event.detail.gasPrice;
-    showGasPrice = false;
-    showGrossEarned = true;
-  }
-  function handleGrossEarned(event) {
-    grossEarned = event.detail.grossEarned;
-    showGrossEarned = false;
-    showShiftLength = true;
-  }
-  function handleShiftLength(event) {
-    shiftLength = event.detail.shiftLength;
-    showShiftLength = false;
-    showTimeOfDay = true;
-  }
-  function handleTimeOfDay(event) {
-    timeOfDay = event.detail.timeOfDay;
-    showTimeOfDay = false;
-    showSave = true;
-  }
+  // function handleAddMpg(event) {
+  //   milesPerGallon = event.detail.milesPerGallon;
+  //   showMpg = false;
+  //   showGasPrice = true;
+  //   console.log("Miles", miles);
+  // }
+  // function handleAddGasPrice(event) {
+  //   gasPrice = event.detail.gasPrice;
+  //   showGasPrice = false;
+  //   showGrossEarned = true;
+  // }
+  // function handleGrossEarned(event) {
+  //   grossEarned = event.detail.grossEarned;
+  //   showGrossEarned = false;
+  //   showShiftLength = true;
+  // }
+  // function handleShiftLength(event) {
+  //   shiftLength = event.detail.shiftLength;
+  //   showShiftLength = false;
+  //   showTimeOfDay = true;
+  // }
+  // function handleTimeOfDay(event) {
+  //   timeOfDay = event.detail.timeOfDay;
+  //   showTimeOfDay = false;
+  //   showSave = true;
+  // }
 
   function nextPage() {
     return (layer += 1);
@@ -112,78 +107,46 @@
 
 <div
   in:fade={{ duration: 200 }}
-  class="container relative w-full max-w-full md:max-w-xs h-96 overflow-hidden"
+  class="container relative w-full max-w-full md:max-w-sm h-96 overflow-hidden"
 >
   <p class="absolute bottom-0 left-0 w-full text-center text-white mb-6">
     <a href="." on:click|preventDefault={cancel}>Cancel</a>
   </p>
-  <!-- {#if showMiles}
-    <AddMiles {miles} on:addMiles={handleAddMiles} />
-  {/if}
-
-  {#if showMpg}
-    <AddMpg {milesPerGallon} on:addMpg={handleAddMpg} />
-  {/if}
-
-  {#if showGasPrice}
-    <AddGasPrice {gasPrice} on:addGasPrice={handleAddGasPrice} />
-  {/if}
-
-  {#if showGrossEarned}
-    <AddGrossEarned {grossEarned} on:addGrossEarned={handleGrossEarned} />
-  {/if}
-
-  {#if showShiftLength}
-    <AddShiftLength {shiftLength} on:addShiftLength={handleShiftLength} />
-  {/if}
-
-  {#if showTimeOfDay}
-    <AddTimeOfDay {timeOfDay} on:addTimeOfDay={handleTimeOfDay} />
-  {/if} -->
-
-  {#if showSave}
-    <SaveShift
-      {miles}
-      {milesPerGallon}
-      {grossEarned}
-      {gasPrice}
-      {shiftLength}
-      {timeOfDay}
-      on:saveShift={addShift}
-    />
-  {/if}
 
   {#if layer === 1}
-    <AddMiles {miles} />
+    <AddMiles />
   {:else if layer === 2}
-    <AddMpg {milesPerGallon} />
+    <AddMpg />
   {:else if layer === 3}
-    <AddGasPrice {gasPrice} />
+    <AddGasPrice />
   {:else if layer === 4}
-    <AddGrossEarned {grossEarned} />
+    <AddGrossEarned />
   {:else if layer === 5}
-    <AddShiftLength {shiftLength} />
+    <AddShiftLength />
   {:else if layer === 6}
-    <AddTimeOfDay {timeOfDay} />
+    <AddTimeOfDay />
   {:else if layer === 7}
-    <SaveShift
-      {miles}
-      {milesPerGallon}
-      {grossEarned}
-      {gasPrice}
-      {shiftLength}
-      {timeOfDay}
-    />
-  {:else if layer === 8}{/if}
-
-  <div class="flex flex-row justify-center items-center">
-    <a href="." on:click|preventDefault={() => (layer -= 1)} class="text-white">
-      <i class="far fa-long-arrow-left text-3xl mr-2" />
-    </a>
-    <a href="." on:click|preventDefault={() => (layer += 1)} class="text-white">
-      <i class="far fa-long-arrow-right text-3xl ml-2" />
-    </a>
-  </div>
+    <SaveShift on:saveShift={addShift} />
+  {/if}
+  {#if layer < 7}
+    <div class="flex flex-row justify-center items-center">
+      <a
+        href="."
+        on:click|preventDefault={() => (layer -= 1)}
+        class="text-white"
+        disabled={layer <= 1}
+      >
+        <i class="far fa-long-arrow-left text-3xl mr-2" />
+      </a>
+      <a
+        href="."
+        on:click|preventDefault={() => (layer += 1)}
+        class="text-white"
+      >
+        <i class="far fa-long-arrow-right text-3xl ml-2" />
+      </a>
+    </div>
+  {/if}
 </div>
 
 <style>

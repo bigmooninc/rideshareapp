@@ -2,6 +2,7 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { quintOut, quintIn } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
@@ -32,7 +33,11 @@
 >
   <div class="w-full flex flex-col justify-center items-center">
     <h3>What was the gross amount earned?</h3>
-    <input type="text" bind:value={grossEarned} bind:this={grossEarnedInput} />
+    <input
+      type="text"
+      bind:value={$shiftData.grossEarned}
+      bind:this={grossEarnedInput}
+    />
   </div>
 </div>
 

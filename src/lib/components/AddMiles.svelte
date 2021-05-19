@@ -2,11 +2,12 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { quintIn, quintOut } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
   // Props
-  export let miles;
+  // export let miles;
 
   // Vars
   let milesInput;
@@ -18,17 +19,19 @@
     }, 200);
   });
 
-  function add() {
-    dispatch("addMiles", {
-      miles,
-    });
-  }
+  // function add() {
+  //   dispatch("addMiles", {
+  //     miles,
+  //   });
+  // }
+
+  console.log("Shift Data: ", $shiftData);
 </script>
 
 <div out:fade={{ duration: 0 }} class="relative">
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles did you drive?</h3>
-    <input type="text" bind:value={miles} bind:this={milesInput} />
+    <input type="text" bind:value={$shiftData.miles} bind:this={milesInput} />
     <!-- <a href="." on:click|preventDefault={add} class="text-white">
       <i class="far fa-long-arrow-left text-3xl mr-2 opacity-25" />
       <i class="far fa-long-arrow-right text-3xl ml-2" />

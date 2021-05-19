@@ -2,6 +2,7 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly, slide } from "svelte/transition";
   import { quintOut, quintIn, sineIn } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
@@ -18,17 +19,26 @@
     }, 200);
   });
 
-  function add() {
-    dispatch("addMpg", {
-      milesPerGallon,
-    });
-  }
+  // function add() {
+  //   dispatch("addMpg", {
+  //     milesPerGallon,
+  //   });
+  // }
+
+  // function handleUpdateMpg() {
+  //   shiftData.update((s) => (s.milesPerGallon = milesPerGallon));
+  //   console.log("Shift Data MPG: ", $shiftData);
+  // }
 </script>
 
 <div in:fade={{ delay: 200, duration: 300 }} out:fade={{ duration: 0 }}>
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles per gallon?</h3>
-    <input type="text" bind:value={milesPerGallon} bind:this={mpgInput} />
+    <input
+      type="text"
+      bind:value={$shiftData.milesPerGallon}
+      bind:this={mpgInput}
+    />
   </div>
 </div>
 

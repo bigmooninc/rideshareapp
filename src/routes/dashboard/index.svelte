@@ -14,6 +14,7 @@
 <script>
   import { onMount } from "svelte";
   import { session } from "$app/stores";
+  import shiftData from "$lib/stores/shift-data";
   import { format, startOfWeek, endOfWeek } from "date-fns";
   import { fade } from "svelte/transition";
   import {
@@ -51,6 +52,8 @@
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   let currentUser = $session.user;
   let shiftView = "All";
+
+  let gasUsed, gasCost, netEarned, netPerHour, netPerMile;
 
   // *** FUNCTIONS ***
   onMount(async () => {
@@ -95,11 +98,14 @@
   });
 
   function clearState() {
-    miles = "";
-    milesPerGallon = "";
-    gasPrice = "";
-    grossEarned = "";
-    shiftLength = "";
+    shiftData.set({
+      miles: "",
+      milesPerGallon: "",
+      shiftLength: "",
+      timeOfDay: "",
+      gasPrice: "",
+      grossEarned: "",
+    });
   }
 
   async function handleAddShift(event) {
@@ -111,12 +117,12 @@
       gasCost: event.detail.gasCost,
       netEarned: event.detail.netEarned,
       netPerHour: event.detail.netPerHour,
+      netPerMile: event.detail.netPerMile,
       miles: event.detail.miles,
       milesPerGallon: event.detail.milesPerGallon,
       gasPrice: event.detail.gasPrice,
       grossEarned: event.detail.grossEarned,
       shiftLength: event.detail.shiftLength,
-      netPerMile: event.detail.netPerMile,
       timeOfDay: event.detail.timeOfDay,
       user: $session.user,
       shiftDate: format(new Date(), "T"),
@@ -128,6 +134,18 @@
     showAddShiftForm = false;
     clearState();
     console.log(docRef);
+  }
+
+  function cancelAddShiftForm() {
+    showAddShiftForm = false;
+    shiftData.set({
+      miles: "",
+      milesPerGallon: "",
+      shiftLength: "",
+      grossEarned: "",
+      timeOfDay: "",
+      gasPrice: "",
+    });
   }
 
   async function handleRemoveShift(shift) {
@@ -229,20 +247,17 @@
       {/if}
       {#if showAddShiftForm}
         <AddShiftForm
-          on:cancelAddShift={() => (showAddShiftForm = false)}
+          on:cancelAddShift={cancelAddShiftForm}
           on:addShift={handleAddShift}
-          {miles}
-          {milesPerGallon}
-          {gasPrice}
-          {grossEarned}
-          {shiftLength}
-          {timeOfDay}
         />
       {/if}
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-16">
-      <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
+      <StatBox
+        title="Miles"
+        value={totalMiles > 0 ? totalMiles.toFixed(1) : 0}
+      />
       <StatBox
         title="AVG MPG"
         value={averageMilesPerGallon > 0 ? averageMilesPerGallon : 0}
@@ -338,7 +353,7 @@
         </div>
       </div>
       {#if shiftView === "All"}
-        {#each $currentWeekShifts.reverse() as shift, index (shift)}
+        {#each $currentWeekShifts as shift, index (shift)}
           <div
             animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
             in:fade={{ duration: 200 }}

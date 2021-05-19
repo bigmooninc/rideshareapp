@@ -2,15 +2,9 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { quintOut, quintIn } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
-
-  export let miles,
-    milesPerGallon,
-    grossEarned,
-    gasPrice,
-    shiftLength,
-    timeOfDay;
 
   function add() {
     dispatch("saveShift");
@@ -26,29 +20,29 @@
     <h3>Shift Details:</h3>
     <div class="line_item flex flex-row justify-between items-center w-full">
       <p class="text-white">Miles Driven:</p>
-      <p class="text-white">{miles}</p>
+      <p class="text-white">{$shiftData.miles}</p>
     </div>
     <div class="line_item flex flex-row justify-between items-center w-full">
       <p class="text-white">MPG:</p>
-      <p class="text-white">{milesPerGallon}</p>
+      <p class="text-white">{$shiftData.milesPerGallon}</p>
     </div>
     <div class="line_item flex flex-row justify-between items-center w-full">
       <p class="text-white">Gas Price:</p>
-      <p class="text-white">{gasPrice}</p>
+      <p class="text-white">{$shiftData.gasPrice}</p>
     </div>
     <div class="line_item flex flex-row justify-between items-center w-full">
       <p class="text-white">Gross Earned:</p>
-      <p class="text-white">{grossEarned}</p>
+      <p class="text-white">{$shiftData.grossEarned}</p>
     </div>
     <div class="line_item flex flex-row justify-between items-center w-full">
       <p class="text-white">Shift Length:</p>
-      <p class="text-white">{shiftLength}</p>
+      <p class="text-white">{$shiftData.shiftLength}</p>
     </div>
     <div
       class="line_item flex flex-row justify-between items-center w-full mb-6"
     >
       <p class="text-white">Time of Day:</p>
-      <p class="text-white">{timeOfDay}</p>
+      <p class="text-white">{$shiftData.timeOfDay}</p>
     </div>
     <div class="flex flex-row items-center">
       <button on:click={add}>Save Shift</button>

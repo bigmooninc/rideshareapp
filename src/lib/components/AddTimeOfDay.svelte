@@ -2,11 +2,12 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { quintIn, quintOut } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
   // Props
-  export let timeOfDay = "AM";
+  // export let timeOfDay = "AM";
 
   // Vars
   // let timeOfDayInput;
@@ -14,6 +15,7 @@
 
   // Functions
   onMount(() => {
+    $shiftData.timeOfDay = selectedTimeOfDay;
     // setTimeout(() => {
     // })
   });
@@ -26,17 +28,17 @@
 
   function setToMorning() {
     selectedTimeOfDay = "AM";
-    timeOfDay = selectedTimeOfDay;
+    $shiftData.timeOfDay = selectedTimeOfDay;
   }
 
   function setToMidday() {
     selectedTimeOfDay = "Midday";
-    timeOfDay = selectedTimeOfDay;
+    $shiftData.timeOfDay = selectedTimeOfDay;
   }
 
   function setToEvening() {
     selectedTimeOfDay = "PM";
-    timeOfDay = selectedTimeOfDay;
+    $shiftData.timeOfDay = selectedTimeOfDay;
   }
 </script>
 

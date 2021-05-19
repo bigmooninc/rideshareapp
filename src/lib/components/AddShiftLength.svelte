@@ -2,6 +2,7 @@
   import { onMount, createEventDispatcher } from "svelte";
   import { fade, fly } from "svelte/transition";
   import { quintOut, quintIn } from "svelte/easing";
+  import shiftData from "$lib/stores/shift-data";
 
   const dispatch = createEventDispatcher();
 
@@ -32,7 +33,11 @@
 >
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How long were you on the road?</h3>
-    <input type="text" bind:value={shiftLength} bind:this={shiftLengthInput} />
+    <input
+      type="text"
+      bind:value={$shiftData.shiftLength}
+      bind:this={shiftLengthInput}
+    />
   </div>
 </div>
 
