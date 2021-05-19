@@ -408,7 +408,7 @@
     background-color: #66fcf1;
     border-color: #66fcf1;
     color: #1f2833;
-    @apply font-medium text-sm rounded border px-6 py-2 relative focus:outline-none;
+    @apply font-medium text-sm rounded-full border px-6 py-2 relative focus:outline-none;
   }
   canvas {
     background-color: white;

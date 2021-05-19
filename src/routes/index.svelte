@@ -61,6 +61,7 @@
     <h3 class="font-bold text-4xl mb-2 leading-none mt-10">
       What information needs to be tracked?
     </h3>
+
     <p class="body_copy">
       There are sevent data points that are being captured when adding a new
       shift:
@@ -96,6 +97,8 @@
       class="register_link border rounded-full font-bold text-base px-8 py-3"
       >Get Started</a
     >
+
+    <img src="/dashboardview.png" alt="" class="w-full mt-10" />
   </div>
 </div>
 
