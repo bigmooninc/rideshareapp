@@ -72,71 +72,63 @@
 </div>
 <div class="bg-white">
   <div class="w-full max-w-4xl mx-auto px-5 md:px-0 py-16">
-    <div class="flex flex-row">
-      <div class="w-3/5">
-        <h3 class="font-bold text-4xl mb-2 leading-none">
-          What does this app do?
-        </h3>
-        <p class="body_copy">
-          When freelance work slowed down I decided to start driving for
-          Uber/Lyft because I could do it whenever I wanted, and could stop and
-          start when I pleased. Since I was going to be putting a good bit of
-          miles on my car, and spending extra money in gas, I wanted to be able
-          to determine if the amount that I made per hour made it worthwhile. So
-          I built this app.
-        </p>
-      </div>
+    <div>
+      <h3 class="font-bold text-3xl md:text-4xl mb-2 leading-none">
+        What this app is not...
+      </h3>
+      <p class="body_copy">
+        This application is not built to automatically track your miles. While
+        there are apps out there that can do this for you, most newer cars have
+        the ability to track trip miles. As well as tracking the trip miles,
+        most cars have a feature to track miles per gallon during that trip.
+        That being the case, this app leverages what your car will already do
+        for you. All you have to do is enter the values at the end of your
+        shift.
+      </p>
+      <p class="body_copy">
+        Also, this app does not automatically pull your earnings from whichever
+        rideshare app you are using. This has to be entered manually as well,
+        but is easily attainable and easy to input.
+      </p>
     </div>
 
-    <h3 class="font-bold text-4xl mb-2 leading-none mt-10">
-      What data am I tracking?
+    <h3 class="font-bold text-3xl md:text-4xl mb-2 leading-none mt-10">
+      What this app is...
     </h3>
 
     <p class="body_copy">
-      There are six data points that are being captured when adding a new shift:
+      This app is a tool to take the metrics from the time that you are on the
+      road during a given time...what is referred to as a "shift"...and give you
+      an accurate picture of how much you are making per hour (and per mile)
+      after factoring in the cost of fuel consumed during that shift, and the
+      actual amount of time you are on the road. Rideshare apps do not track
+      this accurately.
     </p>
-    <ul class="px-5 list-disc m-0 mb-5">
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Miles driven:</span> captured using in the car with
-        trip miles
-      </li>
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Miles per gallon:</span> captured in the car with
-        mpg tracking
-      </li>
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Gas price:</span> the last price paid for gas in
-        the tank
-      </li>
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Gross Earned:</span> obtained from mobile app
-      </li>
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Hours driven:</span> number of hours calculated from
-        the time I begin driving until I officially stop
-      </li>
-      <li class="font-light opacit-100 text-base">
-        <span class="font-bold">Time of day:</span> AM, Midday, PM
-      </li>
-    </ul>
+    <p class="body_copy">
+      There are pieces of data that have to be tracked and input at the end of a
+      shift:
+    </p>
+    <ol class="px-5 list-decimal m-0 mb-5">
+      <li class="font-light opacit-100">Miles driven</li>
+      <li class="font-light opacit-100">Miles per gallon</li>
+      <li class="font-light opacit-100">Gas price</li>
+      <li class="font-light opacit-100">Gross Earned</li>
+      <li class="font-light opacit-100">Hours driven</li>
+      <li class="font-light opacit-100">Time of day</li>
+    </ol>
 
     <p class="body_copy">
-      These data points are used to obtain other data, such as the actual gas
-      cost for the shift, the net earned per hour, and the net earned per mile.
-      These metrics help to determine if driving is worth the time.
+      Once this shift data is added and saved, your weekly and overall totals
+      and averages are automatically updated.
     </p>
-
-    <p class="body_copy">
-      Below is a sample of what the dashboard looks like. It hightlights the
-      current week of data and lists the individual shifts below.
-    </p>
-
-    <!-- <a
-      sveltekit:prefetch
-      href="register"
-      class="register_link border rounded-full font-bold text-base px-8 py-3"
-      >Get Started</a
-    > -->
+    <div class="mt-10">
+      <a
+        sveltekit:prefetch
+        href="register"
+        class="register_link border rounded-full font-bold px-8 py-3"
+        >Get Started</a
+      >
+    </div>
   </div>
 </div>
 
@@ -155,6 +147,9 @@
   p {
     font-family: "Montserrat", sans-serif;
     @apply font-light text-black text-xl mb-5 opacity-75 leading-tight;
+  }
+  li {
+    @apply text-lg font-medium;
   }
   .register_link {
     font-family: "Montserrat", sans-serif;
