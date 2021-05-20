@@ -73,7 +73,6 @@
     const db = await getFirestore();
     const q = await query(
       collection(db, "shifts"),
-      orderBy("shiftDate"),
       where(
         "user",
         "==",
@@ -86,7 +85,8 @@
         "shiftDate",
         "<=",
         `${currentWeekEnd}`
-      )
+      ),
+      orderBy("shiftDate", "desc")
     );
     const querySnapshot = await getDocs(q);
 

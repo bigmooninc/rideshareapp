@@ -45,8 +45,8 @@
   }
   input {
     font-family: "Teko", sans-serif;
-    background-color: #1f2833;
-    @apply text-6xl w-full text-center rounded-full focus:outline-none font-bold text-white pb-2 pt-2 mb-10;
+    border-color: #337475;
+    @apply text-6xl w-full border-2 bg-transparent text-center rounded-full focus:outline-none font-bold text-white pb-2 pt-3 mb-10;
   }
   a {
     @apply focus:outline-none;

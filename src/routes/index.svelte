@@ -45,7 +45,7 @@
   </div>
 </div>
 <div class="bg-white">
-  <div class="w-full max-w-4xl mx-auto px-5 md:px-0 py-16">
+  <div class="w-full max-w-5xl mx-auto px-5 md:px-0 py-16">
     <h3 class="font-bold text-4xl mb-2 leading-none">
       Why did I build this app?
     </h3>
