@@ -37,7 +37,7 @@
           <a
             sveltekit:prefetch
             href="login"
-            class="login_link text-white bg-none px-8 hover:underline"
+            class="login_link text-black bg-none px-8 hover:underline"
             >Sign In</a
           >
         </div>
@@ -70,8 +70,8 @@
     </div> -->
   </div>
 </div>
-<div class="bg-white">
-  <div class="w-full max-w-4xl mx-auto px-5 md:px-0 py-16">
+<div>
+  <div class="w-full max-w-4xl mx-auto px-5 md:px-0 py-24">
     <div>
       <h3 class="font-bold text-3xl md:text-4xl mb-2 leading-none">
         What this app is not...
@@ -121,13 +121,37 @@
       Once this shift data is added and saved, your weekly and overall totals
       and averages are automatically updated.
     </p>
-    <div class="mt-10">
+    <!-- <div class="mt-10">
       <a
         sveltekit:prefetch
         href="register"
         class="register_link border rounded-full font-bold px-8 py-3"
         >Get Started</a
       >
+    </div> -->
+  </div>
+</div>
+<div class="bg-white">
+  <div class="w-full max-w-6xl mx-auto px-5 md:px-0 py-12">
+    <div class="flex flex-col md:flex-row items-center justify-between">
+      <div class="w-full md:flex-1">
+        <p class="cta">
+          Would love to have some folks that do rideshare test the app. If you
+          are interested send me your email and I will reach out with a test
+          account.
+        </p>
+      </div>
+      <div class="w-full md:w-2/5 flex flex-col md:flex-row items-center">
+        <input
+          type="text"
+          placeholder="Email"
+          class="border border-gray-300 rounded-full px-5 py-3 text-lg font-light mr-0 md:mr-3 mb-5 md:mb-0 w-full md:w-auto"
+        />
+        <button
+          class="bg-black border text-white border-black rounded-full px-8 py-4 w-full md:w-auto"
+          >Submit</button
+        >
+      </div>
     </div>
   </div>
 </div>
@@ -137,8 +161,10 @@
 <style>
   h1,
   h3,
+  input,
   li {
     font-family: "Montserrat", sans-serif;
+    color: #fff;
   }
   h1 {
     /* font-family: "Teko"; */
@@ -149,7 +175,7 @@
     @apply font-light text-black text-xl mb-5 opacity-75 leading-tight;
   }
   li {
-    @apply text-lg font-medium;
+    @apply text-lg font-medium text-white;
   }
   .register_link {
     font-family: "Montserrat", sans-serif;
@@ -159,14 +185,26 @@
   }
   .login_link {
     font-family: "Montserrat", sans-serif;
-    @apply text-white;
   }
   .body_copy {
     font-family: "Montserrat", sans-serif;
-    @apply text-lg font-light opacity-100 text-black mb-5;
+    @apply text-lg font-light opacity-75 text-white mb-5;
   }
   .hero_copy {
     font-family: "Montserrat", sans-serif;
     @apply text-xl font-light opacity-100 text-black mb-5;
+  }
+  input {
+    @apply text-black;
+  }
+  .cta {
+    @apply font-normal text-xl mr-0 md:mr-20;
+  }
+  button {
+    font-family: "Montserrat", sans-serif;
+    background: #66fcf1;
+    border-color: #66fcf1;
+    color: #1f2833;
+    @apply font-bold;
   }
 </style>
