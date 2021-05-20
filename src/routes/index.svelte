@@ -108,7 +108,7 @@
       There are pieces of data that have to be tracked and input at the end of a
       shift:
     </p>
-    <ol class="px-5 list-decimal m-0 mb-5">
+    <ol class="px-6 list-decimal m-0 mb-5">
       <li class="font-light opacit-100">Miles driven</li>
       <li class="font-light opacit-100">Miles per gallon</li>
       <li class="font-light opacit-100">Gas price</li>
