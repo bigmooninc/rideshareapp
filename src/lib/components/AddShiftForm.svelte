@@ -112,7 +112,7 @@
     /* width: 100%;
     max-width: 300px; */
     height: 400px;
-    background-color: rgba(11, 12, 16, 0.9);
+    background-color: rgba(11, 12, 16, 0.95);
     border: 2px solid #1f2833;
     @apply absolute right-0 top-0 p-8 z-20 rounded-lg shadow-md flex flex-col justify-center items-center;
   }
