@@ -43,31 +43,9 @@
         </div>
       </div>
       <div class="flex-1 mt-10 md:mt-0">
-        <img src="/mac_dashboard.png" alt="" class="w-full ml-0 md:ml-10" />
+        <img src="/mac_dashboard.jpg" alt="" class="w-full ml-0 md:ml-10" />
       </div>
     </div>
-    <!-- <div
-      class="flex flex-col justify-center items-start pt-36 md:pt-48 pb-32 w-full md:w-2/3"
-    >
-      <h1>How much is your driving making you?</h1>
-      <p class="mr-0 md:mr-16 md:overflow-y-hiddenmr-32">
-        Get an accurate picture of how much you are actually making per hour
-        when you drive, and what times are most profitable.
-      </p>
-      <div class="flex flex-row items-center">
-        <a
-          sveltekit:prefetch
-          href="register"
-          class="register_link border rounded-full font-bold text-base px-8 py-3"
-          >Get Started</a
-        >
-        <a
-          sveltekit:prefetch
-          href="login"
-          class="login_link text-white bg-none px-8 hover:underline">Sign In</a
-        >
-      </div>
-    </div> -->
   </div>
 </div>
 <div>
@@ -121,14 +99,6 @@
       Once this shift data is added and saved, your weekly and overall totals
       and averages are automatically updated.
     </p>
-    <!-- <div class="mt-10">
-      <a
-        sveltekit:prefetch
-        href="register"
-        class="register_link border rounded-full font-bold px-8 py-3"
-        >Get Started</a
-      >
-    </div> -->
   </div>
 </div>
 <div class="bg-white">
@@ -136,9 +106,9 @@
     <div class="flex flex-col md:flex-row items-center justify-between">
       <div class="w-full md:flex-1">
         <p class="cta">
-          Would love to have some folks that do rideshare test the app. If you
-          are interested send me your email and I will reach out with a test
-          account.
+          If you are a rideshare driver and would like to have a demo account to
+          see if this is a tool that would be usedfule, send us your email
+          address and we will set you up a test account.
         </p>
       </div>
       <div class="w-full md:w-2/5 flex flex-col md:flex-row items-center">
@@ -167,7 +137,6 @@
     color: #fff;
   }
   h1 {
-    /* font-family: "Teko"; */
     @apply font-extrabold text-black text-5xl md:text-6xl mb-4 leading-none;
   }
   p {
@@ -198,7 +167,7 @@
     @apply text-black;
   }
   .cta {
-    @apply font-normal text-xl mr-0 md:mr-20;
+    @apply font-normal text-xl mr-0 md:mr-20 mb-5 md:mb-0;
   }
   button {
     font-family: "Montserrat", sans-serif;

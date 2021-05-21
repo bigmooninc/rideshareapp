@@ -328,7 +328,7 @@
       <div
         class="item_header flex flex-row items-center px-5 py-2 rounded overflow-x-scroll"
       >
-        <div class="w-16 md:w-20">
+        <div class="w-24 md:w-24">
           <p class="text-white">
             <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
             <!-- {shift.shiftDate} -->
@@ -349,10 +349,10 @@
           <p class="text-white text-center">Earnings</p>
         </div>
         <div class="flex-1">
-          <p class="text-white text-center">Net/Hour</p>
+          <p class="text-white text-center">Net/Hr</p>
         </div>
         <div class="flex-1">
-          <p class="text-white text-center">Net/Mile</p>
+          <p class="text-white text-center">Net/Mi</p>
         </div>
       </div>
       {#if shiftView === "All"}
@@ -421,7 +421,7 @@
   }
   @media screen and (max-width: 767px) {
     .item_header {
-      width: 750px;
+      width: 850px;
     }
   }
   p {

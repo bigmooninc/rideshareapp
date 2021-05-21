@@ -24,12 +24,12 @@
 <div
   class="relative item flex flex-row items-center px-5 py-3 rounded mb-2 overflow-hidden"
 >
-  <div class="w-16 md:w-20">
+  <div class="w-24 md:w-24">
     <p class="text-white text-left">
       <!-- {format(new Date(shift.shiftDate.toDate()), "MMM d")} -->
       <!-- {shift.shiftDate} -->
       <!-- {formatDate(parseInt(shift.shiftDate))} -->
-      {format(new Date(parseInt(shift.shiftDate)), "MMM d")}
+      {format(new Date(parseInt(shift.shiftDate)), "eee, MMM d")}
     </p>
   </div>
   <div class="flex-1">
@@ -78,7 +78,7 @@
   }
   @media screen and (max-width: 767px) {
     .item {
-      width: 750px;
+      width: 850px;
       background: #1f2833;
     }
   }
