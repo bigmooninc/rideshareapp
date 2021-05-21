@@ -31,7 +31,10 @@
   // }
 </script>
 
-<div in:fade={{ delay: 200, duration: 300 }} out:fade={{ duration: 0 }}>
+<div
+  in:fly={{ delay: 200, x: -600, duration: 1000, easing: quintOut }}
+  out:fade={{ duration: 0 }}
+>
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles per gallon?</h3>
     <input
@@ -44,12 +47,12 @@
 
 <style>
   h3 {
-    @apply font-light text-xl text-white text-center mb-10 leading-tight;
+    @apply font-light text-3xl text-white text-center mb-10 leading-tight;
   }
   input {
     font-family: "Teko", sans-serif;
     border-color: #337475;
-    @apply text-6xl w-full rounded-full bg-transparent border-2 text-center focus:outline-none font-bold text-white pb-2 pt-3 mb-10;
+    @apply text-6xl w-full rounded-full bg-transparent border-2 text-center focus:outline-none font-bold text-white pb-2 pt-3 mb-5;
   }
   a {
     @apply focus:outline-none;

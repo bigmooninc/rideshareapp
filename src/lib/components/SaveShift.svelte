@@ -15,7 +15,7 @@
 </script>
 
 <div
-  in:fly={{ delay: 200, x: -700, duration: 500, easing: quintOut, opacity: 1 }}
+  in:fly={{ delay: 200, x: -600, duration: 1000, easing: quintOut }}
   out:fade={{ duration: 0 }}
   class="relative flex flex-col justify-center items-center w-full"
 >

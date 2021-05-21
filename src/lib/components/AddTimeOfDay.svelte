@@ -43,7 +43,7 @@
 </script>
 
 <div
-  in:fade={{ delay: 200, duration: 300 }}
+  in:fly={{ delay: 200, x: -600, duration: 1000, easing: quintOut }}
   out:fade={{ duration: 0 }}
   class="relative"
 >
@@ -81,7 +81,7 @@
     color: #1f2833;
   }
   h3 {
-    @apply font-light text-xl text-white text-center mb-10 leading-tight;
+    @apply font-light text-3xl text-white text-center mb-10 leading-tight;
   }
   a {
     @apply transition-all duration-300;

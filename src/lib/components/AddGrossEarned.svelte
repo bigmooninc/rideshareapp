@@ -27,7 +27,7 @@
 </script>
 
 <div
-  in:fade={{ delay: 200, duration: 300 }}
+  in:fly={{ delay: 200, x: -600, duration: 1000, easing: quintOut }}
   out:fade={{ duration: 0 }}
   class="relative"
 >
@@ -43,12 +43,12 @@
 
 <style>
   h3 {
-    @apply font-light text-xl text-white text-center mb-10 leading-tight;
+    @apply font-light text-3xl text-white text-center mb-10 leading-tight;
   }
   input {
     font-family: "Teko", sans-serif;
     border-color: #337475;
-    @apply text-6xl w-full bg-transparent text-center focus:outline-none font-bold text-white pb-2 pt-3 rounded-full border-2 mb-10;
+    @apply text-6xl w-full bg-transparent text-center focus:outline-none font-bold text-white pb-2 pt-3 rounded-full border-2 mb-5;
   }
   button {
     @apply focus:outline-none;

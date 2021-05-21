@@ -41,12 +41,12 @@
 
 <style>
   h3 {
-    @apply font-light text-xl text-white text-center mb-10 leading-tight;
+    @apply font-light text-3xl text-white text-center mb-10 leading-tight;
   }
   input {
     font-family: "Teko", sans-serif;
     border-color: #337475;
-    @apply text-6xl w-full border-2 bg-transparent text-center rounded-full focus:outline-none font-bold text-white pb-2 pt-3 mb-10;
+    @apply text-6xl w-full border-2 bg-transparent text-center rounded-full focus:outline-none font-bold text-white pb-2 pt-3 mb-5;
   }
   a {
     @apply focus:outline-none;
