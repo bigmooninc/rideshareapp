@@ -28,7 +28,11 @@
   console.log("Shift Data: ", $shiftData);
 </script>
 
-<div out:fade={{ duration: 0 }} class="relative">
+<div
+  in:fly={{ delay: 200, x: -600, duration: 1000, easing: quintOut }}
+  out:fade={{ duration: 0 }}
+  class="relative"
+>
   <div class="w-full flex flex-col justify-center items-center">
     <h3>How many miles did you drive?</h3>
     <input type="text" bind:value={$shiftData.miles} bind:this={milesInput} />

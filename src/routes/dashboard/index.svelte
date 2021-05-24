@@ -53,32 +53,30 @@
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   let currentUser = $session.user;
   let shiftView = "All";
+  // let currentWeekStart;
+  // let currentWeekEnd;
 
   let gasUsed, gasCost, netEarned, netPerHour, netPerMile;
 
   // *** FUNCTIONS ***
   onMount(async () => {
-    const currentWeekStart = format(
-      startOfWeek(new Date(), { weekStartsOn: 1 }),
-      "T"
-    );
     const currentWeekEnd = format(
       endOfWeek(new Date(), { weekStartsOn: 1 }),
       "T"
     );
 
-    console.log("Week: ", currentWeekStart, currentWeekEnd);
-    console.log("User: ", $session.user);
+    const currentWeekStart = format(
+      startOfWeek(new Date(), { weekStartsOn: 1 }),
+      "T"
+    );
 
     const db = await getFirestore();
+    const shiftsRef = await collection(db, "shifts");
     const q = await query(
-      collection(db, "shifts"),
+      shiftsRef,
+      where("user", "==", $session.user),
       where(
-        "user",
-        "==",
-        $session.user,
-        "&&",
-        "`shiftDate`",
+        "shiftDate",
         ">=",
         `${currentWeekStart}`,
         "&&",
@@ -97,6 +95,7 @@
       shiftArray = shiftArray;
     });
     currentWeekShifts.setCurrentWeekShifts(shiftArray);
+    console.log("Current: ", $currentWeekShifts);
   });
 
   function clearState() {
@@ -356,7 +355,7 @@
         </div>
       </div>
       {#if shiftView === "All"}
-        {#each $currentWeekShifts as shift, index (shift)}
+        {#each $currentWeekShifts as shift, index (shift.shiftId)}
           <div
             animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
             in:fade={{ duration: 200 }}

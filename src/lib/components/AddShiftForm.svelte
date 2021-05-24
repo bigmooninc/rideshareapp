@@ -12,6 +12,7 @@
   import AddShiftLength from "$lib/components/AddShiftLength.svelte";
   import AddGasPrice from "$lib/components/AddGasPrice.svelte";
   import AddGrossEarned from "$lib/components/AddGrossEarned.svelte";
+  import AddShiftDate from "$lib/components/AddShiftDate.svelte";
   import SaveShift from "$lib/components/SaveShift.svelte";
   import AddTimeOfDay from "$lib/components/AddTimeOfDay.svelte";
   import { prevent_default } from "svelte/internal";
@@ -73,21 +74,24 @@
   {/if}
 
   {#if layer === 1}
-    <AddMiles />
+    <!-- <AddShiftDate /> -->
+    <p>Date</p>
   {:else if layer === 2}
-    <AddMpg />
+    <AddMiles />
   {:else if layer === 3}
-    <AddGasPrice />
+    <AddMpg />
   {:else if layer === 4}
-    <AddGrossEarned />
+    <AddGasPrice />
   {:else if layer === 5}
-    <AddShiftLength />
+    <AddGrossEarned />
   {:else if layer === 6}
-    <AddTimeOfDay />
+    <AddShiftLength />
   {:else if layer === 7}
+    <AddTimeOfDay />
+  {:else if layer === 8}
     <SaveShift on:saveShift={addShift} on:cancelShift={cancelAddShift} />
   {/if}
-  {#if layer < 7}
+  {#if layer < 8}
     <div class="flex flex-row justify-center items-center">
       <button
         on:click={() => (layer -= 1)}
