@@ -15,7 +15,14 @@
   import { onMount } from "svelte";
   import { session } from "$app/stores";
   import shiftData from "$lib/stores/shift-data";
-  import { format, startOfWeek, endOfWeek } from "date-fns";
+  import {
+    format,
+    startOfWeek,
+    endOfWeek,
+    startOfYear,
+    endOfYear,
+    getYear,
+  } from "date-fns";
   import { fade } from "svelte/transition";
   import {
     collection,
@@ -35,6 +42,7 @@
 
   // *** DATA STORES ***
   import currentWeekShifts from "$lib/stores/current-shifts";
+  import currentYearShifts from "$lib/stores/year-shifts";
 
   // *** COMPONENTS ***
   import StatBox from "$lib/components/StatBox.svelte";
@@ -53,6 +61,14 @@
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   let currentUser = $session.user;
   let shiftView = "All";
+
+  let yearShiftArray = [];
+  let currentYearMiles = [];
+  let currentYearMpg = [];
+  let currentYearGasCost = [];
+  let currentYearGrossEarned = [];
+  let currentYearNetPerHour = [];
+  let currentYearNetPerMile = [];
   // let currentWeekStart;
   // let currentWeekEnd;
 
@@ -60,6 +76,34 @@
 
   // *** FUNCTIONS ***
   onMount(async () => {
+    const currentYearStart = format(startOfYear(new Date()), "T");
+    const currentYearEnd = format(endOfYear(new Date()), "T");
+
+    const db = await getFirestore();
+    const yearShiftRef = await collection(db, "shifts");
+    const yearQ = await query(
+      yearShiftRef,
+      where("user", "==", $session.user),
+      where(
+        "shiftDate",
+        ">=",
+        `${currentYearStart}`,
+        "&&",
+        "shiftDate",
+        "<=",
+        `${currentYearEnd}`
+      )
+    );
+
+    const yearQuerySnapshot = await getDocs(yearQ);
+    yearQuerySnapshot.forEach((doc) => {
+      const newShift = doc.data();
+      yearShiftArray = [...yearShiftArray, newShift];
+      yearShiftArray = yearShiftArray;
+    });
+    console.log("Year Q", yearShiftArray);
+    currentYearShifts.setCurrentYearShifts(yearShiftArray);
+
     const currentWeekEnd = format(
       endOfWeek(new Date(), { weekStartsOn: 1 }),
       "T"
@@ -70,7 +114,6 @@
       "T"
     );
 
-    const db = await getFirestore();
     const shiftsRef = await collection(db, "shifts");
     const q = await query(
       shiftsRef,
@@ -157,6 +200,86 @@
 
   //  REACTIVITY
 
+  // CURRENT YEAR NUMBERS
+  $: {
+    currentYearMiles = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearMiles = [...currentYearMiles, parseFloat(s.miles)];
+      currentYearMiles = currentYearMiles;
+    });
+  }
+  $: totalYearMiles = currentYearMiles.reduce((a, b) => a + b, 0);
+
+  $: {
+    currentYearMpg = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearMpg = [...currentYearMpg, parseFloat(s.milesPerGallon)];
+      currentYearMpg = currentYearMpg;
+    });
+  }
+  $: yearMpg = currentYearMpg.reduce((a, b) => a + b, 0);
+  $: averageYearMilesPerGallon = (yearMpg / currentYearMpg.length).toFixed(1);
+
+  $: {
+    currentYearGasCost = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearGasCost = [...currentYearGasCost, s.gasCost];
+      currentYearGasCost = currentYearGasCost;
+    });
+  }
+  $: totalYearGasCost = currentYearGasCost
+    .reduce((a, b) => a + b, 0)
+    .toFixed(2);
+
+  $: {
+    currentYearGrossEarned = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearGrossEarned = [
+        ...currentYearGrossEarned,
+        parseFloat(s.grossEarned),
+      ];
+      currentYearGrossEarned = currentYearGrossEarned;
+    });
+  }
+  $: totalYearGrossEarned = currentYearGrossEarned
+    .reduce((a, b) => a + b, 0)
+    .toFixed(2);
+
+  $: {
+    currentYearNetPerMile = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearNetPerMile = [
+        ...currentYearNetPerMile,
+        parseFloat(s.netPerMile),
+      ];
+      currentYearNetPerMile = currentYearNetPerMile;
+    });
+  }
+  $: yearNetPerMile = currentYearNetPerMile.reduce((a, b) => a + b, 0);
+  $: yearAverageNetPerMile = (
+    yearNetPerMile / currentYearNetPerMile.length
+  ).toFixed(2);
+
+  $: {
+    currentYearNetPerHour = [];
+    $currentYearShifts.forEach((s) => {
+      currentYearNetPerHour = [
+        ...currentYearNetPerHour,
+        parseFloat(s.netPerHour),
+      ];
+      currentYearNetPerHour = currentYearNetPerHour;
+    });
+  }
+  $: yearNetPerHour = currentYearNetPerHour.reduce((a, b) => a + b, 0);
+  $: yearAverageNetPerHour = (
+    yearNetPerHour / currentYearNetPerHour.length
+  ).toFixed(2);
+
+  $: yearAmShifts = $currentYearShifts.filter((s) => s.timeOfDay === "AM");
+  $: yearPmShifts = $currentYearShifts.filter((s) => s.timeOfDay === "PM");
+  $: yearMidShifts = $currentYearShifts.filter((s) => s.timeOfDay === "Midday");
+
+  // CURRENT WEEK NUMBERS
   // Calculating total miles
   $: {
     shiftMiles = [];
@@ -228,15 +351,12 @@
 
 <div class="page relative h-screen">
   <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
-    <div class="relative flex flex-row justify-between items-center mb-3">
+    <div class="relative flex flex-row justify-between items-center">
       <div class="flex-1 flex flex-row items-end">
         <!-- <h3 class="hidden md:block py-4">This Week's Totals & Averages -</h3> -->
-        <h3 class="py-2">
-          {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
-          - {format(
-            new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
-            "MMM d"
-          )}
+        <h3 class="py-3">
+          {getYear(new Date())}
+          - YTD
         </h3>
       </div>
 
@@ -253,6 +373,66 @@
           on:addShift={handleAddShift}
         />
       {/if}
+    </div>
+
+    <div
+      class="stat_container grid grid-cols-2 md:grid-cols-6 gap-3 mb-8 pb-10"
+    >
+      <StatBox
+        title="Miles"
+        value={totalYearMiles > 0 ? totalYearMiles.toFixed(1) : 0}
+      />
+      <StatBox
+        title="AVG MPG"
+        value={averageYearMilesPerGallon > 0 ? averageYearMilesPerGallon : 0}
+      />
+      <StatBox
+        title="Gas Cost"
+        value={totalYearGasCost > 0 ? totalYearGasCost : 0.0}
+        isDollarValue
+      />
+      <StatBox
+        title="Earnings"
+        value={totalYearGrossEarned > 0 ? totalYearGrossEarned : 0.0}
+        isDollarValue
+      />
+      <StatBox
+        title="Net per Hour"
+        value={yearAverageNetPerHour > 0 ? yearAverageNetPerHour : 0.0}
+        isDollarValue
+      />
+      <StatBox
+        title="Net per Mile"
+        value={yearAverageNetPerMile > 0 ? yearAverageNetPerMile : 0.0}
+        isDollarValue
+      />
+    </div>
+
+    <div class="relative flex flex-row justify-between items-center">
+      <div class="flex-1 flex flex-row items-end">
+        <!-- <h3 class="hidden md:block py-4">This Week's Totals & Averages -</h3> -->
+        <h3 class="pb-3">
+          {format(startOfWeek(new Date(), { weekStartsOn: 1 }), "MMM d")}
+          - {format(
+            new Date(endOfWeek(new Date(), { weekStartsOn: 1 })),
+            "MMM d"
+          )}
+        </h3>
+      </div>
+
+      <!-- {#if !showAddShiftForm}
+        <button
+          in:fade={{ delay: 100, duration: 200 }}
+          on:click={() => (showAddShiftForm = true)}>Add Shift</button
+        >
+      {/if}
+      {#if showAddShiftForm}
+        <AddShiftForm
+          on:cancelAddShiftForm={cancelAddShiftForm}
+          on:cancelAddShift={cancelAddShiftForm}
+          on:addShift={handleAddShift}
+        />
+      {/if} -->
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-16">
@@ -407,7 +587,7 @@
     background-color: #66fcf1;
     border-color: #66fcf1;
     color: #1f2833;
-    @apply font-medium text-sm rounded-full border px-6 py-2 relative focus:outline-none;
+    @apply font-medium text-sm rounded-full border px-6 py-2 relative focus:outline-none mb-2;
   }
   canvas {
     background-color: white;
@@ -457,5 +637,8 @@
   }
   .evening {
     @apply border-r pr-5 pl-4 rounded-r-full;
+  }
+  .stat_container {
+    border-bottom: 1px solid #1f2833;
   }
 </style>

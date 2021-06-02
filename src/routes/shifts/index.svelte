@@ -31,6 +31,8 @@
     query,
     where,
     getDocs,
+    deleteDoc,
+    doc,
   } from "firebase/firestore";
   import { flip } from "svelte/animate";
   import { quintOut } from "svelte/easing";
@@ -56,6 +58,7 @@
   let viewMonthShifts = false;
   let miles, milesPerGallon, gasPrice, grossEarned, shiftLength, timeOfDay;
   // let currentUser = $session.user;
+  let shiftView = "All";
 
   // Functions
   onMount(async () => {
@@ -117,6 +120,12 @@
     const monthIndex = getMonth(new Date()) - num;
     const month = months[monthIndex];
     return month;
+  }
+
+  async function handleRemoveShift(shift) {
+    const db = await getFirestore();
+    await deleteDoc(doc(db, "shifts", shift.shiftId));
+    currentMonthShifts.removeCurrentMonthShift(shift);
   }
 
   // Reactivity
@@ -184,16 +193,16 @@
   $: netPer = shiftNetPerMile.reduce((a, b) => a + b, 0);
   $: averageNetPerMile = (netPer / shiftNetPerMile.length).toFixed(2);
 
-  // $: amShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "AM");
-  // $: pmShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "PM");
-  // $: midShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "Midday");
+  $: amShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "AM");
+  $: pmShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "PM");
+  $: midShifts = $currentMonthShifts.filter((s) => s.timeOfDay === "Midday");
 </script>
 
 <div class="page relative h-screen">
   <div class="relative w-full max-w-5xl mx-auto pt-28 pb-20 px-3 md:px-0">
     <div class="relative flex flex-row justify-between items-center">
       <div class="flex-1 flex flex-row items-center">
-        <h3>
+        <h3 class="py-3">
           {getMonthName(0)}
           {getYear(new Date())} -
           <span class="font-light opacity-50">Totals & Averages</span>
@@ -246,74 +255,58 @@
         value={averageNetPerMile > 0 ? averageNetPerMile : 0.0}
         isDollarValue
       />
-      <!-- <StatBox title="Miles" value={totalMiles > 0 ? totalMiles : 0} />
-      <StatBox
-        title="MPG"
-        value={averageMilesPerGallon > 0 ? averageMilesPerGallon : 0}
-      />
-      <StatBox
-        title="Gas Cost"
-        value={totalGasCost > 0 ? totalGasCost : 0.0}
-        isDollarValue
-      />
-      <StatBox
-        title="Gross Earned"
-        value={totalGrossEarned > 0 ? totalGrossEarned : 0.0}
-        isDollarValue
-      />
-      <StatBox
-        title="Net per Hour"
-        value={averageNetPerHour > 0 ? averageNetPerHour : 0.0}
-        isDollarValue
-      />
-      <StatBox
-        title="Net per Mile"
-        value={averageNetPerMile > 0 ? averageNetPerMile : 0.0}
-        isDollarValue
-      /> -->
     </div>
 
-    <!-- <div class="flex-1 flex flex-row items-center">
-      <h3>{getMonthStats(1)} {getYear(new Date())}</h3>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-10">
-      <StatBox title="Miles" value={56.3} />
-      <StatBox title="MPG" value={32.4} />
-      <StatBox title="Gas Cost" value={2.55} isDollarValue />
-      <StatBox title="Gross Earned" value={56.43} isDollarValue />
-      <StatBox title="Net per Hour" value={20.23} isDollarValue />
-      <StatBox title="Net per Mile" value={0.54} isDollarValue />
-    </div>
-
-    <div class="flex-1 flex flex-row items-center">
-      <h3>{getMonthStats(2)} {getYear(new Date())}</h3>
-    </div>
-
-    <div class="grid grid-cols-2 md:grid-cols-6 gap-3 mb-10">
-      <StatBox title="Miles" value={56.3} />
-      <StatBox title="MPG" value={32.4} />
-      <StatBox title="Gas Cost" value={2.55} isDollarValue />
-      <StatBox title="Gross Earned" value={56.43} isDollarValue />
-      <StatBox title="Net per Hour" value={20.23} isDollarValue />
-      <StatBox title="Net per Mile" value={0.54} isDollarValue />
-    </div> -->
     {#if !viewMonthShifts}
       <a
         in:fade={{ duration: 200 }}
         href="."
         class="text-white text-sm bg-transparent border border-white rounded-full px-8 py-3 hover:bg-white hover:text-black transition-all duration-300"
-        on:click|preventDefault={() => (viewMonthShifts = true)}>Show Shifts</a
+        on:click|preventDefault={() => (viewMonthShifts = true)}>View Shifts</a
       >
     {/if}
 
     {#if viewMonthShifts}
       <div in:fade={{ duration: 200 }} class="mb-8">
-        <h3>
-          {getMonthName(0)}
-          {getYear(new Date())} -
-          <span class="font-light opacity-50">Shifts</span>
-        </h3>
+        <div class="flex flex-col md:flex-row items-start md:items-end mb-3">
+          <h3>
+            {getMonthName(0)}
+            {getYear(new Date())} -
+            <span class="font-light opacity-50">Shifts</span>
+          </h3>
+          <div
+            class="flex flex-row items-center justify-center md:justify-end w-full md:flex-1 mb-2 md:mb-0"
+          >
+            <a
+              href="."
+              on:click|preventDefault={() => (shiftView = "All")}
+              class="all {shiftView === 'All'
+                ? 'active'
+                : 'bg-transparent text-white'}">All</a
+            >
+            <a
+              href="."
+              on:click|preventDefault={() => (shiftView = "AM")}
+              class="morning {shiftView === 'AM'
+                ? 'active'
+                : 'bg-transparent text-white'}">AM</a
+            >
+            <a
+              href="."
+              on:click|preventDefault={() => (shiftView = "Midday")}
+              class="midday {shiftView === 'Midday'
+                ? 'active'
+                : 'bg-transparent text-white'}">MID</a
+            >
+            <a
+              href="."
+              on:click|preventDefault={() => (shiftView = "PM")}
+              class="evening {shiftView === 'PM'
+                ? 'active'
+                : 'bg-transparent text-white'}">PM</a
+            >
+          </div>
+        </div>
 
         <div class="overflow-y-scroll">
           <div
@@ -346,11 +339,56 @@
               <p class="text-white text-center">Net/Mi</p>
             </div>
           </div>
-          {#each $currentMonthShifts as shift, index (shift)}
-            <div animate:flip={{ delay: 250, duration: 250, easing: quintOut }}>
-              <ShiftDetail {shift} />
-            </div>
-          {/each}
+
+          {#if shiftView === "All"}
+            {#each $currentMonthShifts as shift, index (shift.shiftId)}
+              <div
+                animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+                in:fade={{ duration: 200 }}
+              >
+                <ShiftDetail
+                  {shift}
+                  on:removeShift={handleRemoveShift(shift)}
+                />
+              </div>
+            {/each}
+          {:else if shiftView === "AM"}
+            {#each amShifts as shift, index (shift)}
+              <div
+                animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+                in:fade={{ duration: 200 }}
+              >
+                <ShiftDetail
+                  {shift}
+                  on:removeShift={handleRemoveShift(shift)}
+                />
+              </div>
+            {/each}
+          {:else if shiftView === "Midday"}
+            {#each midShifts as shift, index (shift)}
+              <div
+                animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+                in:fade={{ duration: 200 }}
+              >
+                <ShiftDetail
+                  {shift}
+                  on:removeShift={handleRemoveShift(shift)}
+                />
+              </div>
+            {/each}
+          {:else if shiftView === "PM"}
+            {#each pmShifts as shift, index (shift)}
+              <div
+                animate:flip={{ delay: 250, duration: 250, easing: quintOut }}
+                in:fade={{ duration: 200 }}
+              >
+                <ShiftDetail
+                  {shift}
+                  on:removeShift={handleRemoveShift(shift)}
+                />
+              </div>
+            {/each}
+          {/if}
         </div>
       </div>
     {/if}
@@ -369,7 +407,7 @@
 <style>
   h3 {
     font-family: "Montserrat", sans-serif;
-    @apply font-bold text-xl text-white relative py-3;
+    @apply font-bold text-xl text-white relative;
   }
   .page {
     background-color: #0b0c10;
@@ -398,5 +436,35 @@
     font-family: "Teko", sans-serif;
     color: #66fcf1;
     @apply text-2xl opacity-50;
+  }
+  .active {
+    background-color: #66fcf1;
+    color: #1f2833;
+  }
+  .all,
+  .morning,
+  .midday,
+  .evening {
+    border-color: #66fcf1;
+    @apply py-2 border-b border-t text-xs transition-all duration-200;
+  }
+  .all:hover,
+  .morning:hover,
+  .midday:hover,
+  .evening:hover {
+    background-color: #66fcf1;
+    color: #1f2833;
+  }
+  .all {
+    @apply border-l pl-5 pr-4 rounded-l-full;
+  }
+  .morning {
+    @apply border-l border-r px-4;
+  }
+  .midday {
+    @apply border-r px-4;
+  }
+  .evening {
+    @apply border-r pr-5 pl-4 rounded-r-full;
   }
 </style>
